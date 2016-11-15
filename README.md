@@ -1,8 +1,8 @@
 UIP Is Pretty
 =============
 
-UIP Scrapes wallpapers from reddit and applies them as wallpapers on a 
-gnome Desktop according to a schedule. 
+UIP Scrapes wallpapers from reddit and applies them as wallpapers on a
+gnome Desktop according to a schedule.
 
 Set Up
 ======
@@ -18,14 +18,14 @@ pygobject, to install on debian use:
 sudo apt-get install python3-gi
 ```
 
-RUN
+Run
 ===
 
 To run the command cd into the project folder and type:
 
 ```
 python3 UIP.py
-``` 
+```
 Contact Us
 ==========
 https://gitter.im/NIT-dgp/General
