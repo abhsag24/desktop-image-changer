@@ -35,7 +35,7 @@ def get_images(url):
         return
 
     for link in thumbnails:
-        if link['href'].endswith(('jpg','png','jpeg')):
+        if link['href'].endswith(('jpg','png','jpeg','bmp')):
             image_links.append( link['href'])
         if(len(image_links) == NUMBER_OF_IMAGES_TO_PARSE):
             break
