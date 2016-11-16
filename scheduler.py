@@ -17,7 +17,6 @@ class scheduler():
         self.setStartTime(time.time())
         self.changeCycle()
         
-        #print("Anything")
     def initFetch(self):
         try:    
             get_images(WEBSITE)
