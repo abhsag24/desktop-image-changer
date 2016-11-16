@@ -15,11 +15,16 @@ class scheduler():
             while not os.path.isdir(os.path.join(CURR_DIR,PICS_FOLDER)):
                 print('Downloading images..')
                 time.sleep(60)
+
         elif not os.path.exists(directory):
                 os.makedirs(directory)
-        self.change_random()
-        self.setStartTime(time.time())
-        self.changeCycle()
+        
+        if os.listdir(directory) != []:
+            self.change_random()
+            self.setStartTime(time.time())
+            self.changeCycle()
+        else:
+            print("No downloaded images. Try again in online mode.")
 
     def initFetch(self):
         try:
