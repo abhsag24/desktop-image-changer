@@ -29,3 +29,8 @@ python3 UIP.py
 Contact Us
 ==========
 https://gitter.im/NIT-dgp/General
+
+
+Screenshot
+==========
+![alt tag]( examples/UIP_screenshot.png )
