@@ -11,6 +11,7 @@ class scheduler():
         print (time.time())
         if not offline:
             fetch = Thread(target=self.initFetch)
+            fetch.setDaemon(True) # all child threads need to be daemons to die upon main thread exit
             fetch.start()
             while not os.path.isdir(os.path.join(CURR_DIR,PICS_FOLDER)):
                 print('Downloading images..')
