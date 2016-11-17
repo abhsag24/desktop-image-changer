@@ -12,6 +12,11 @@ shortlog: commit message
 commit body
 Fixes <issue number>
 ```
+before you push remember to run
+```
+coala
+```
+and commit all changes suggested
 
 where short log is the area/filename where you make the change
 commit message is the very brief description of the change made by you and any

@@ -1,0 +1,12 @@
+language: python
+
+python:
+  - "3.4"
+
+sudo: true
+
+before_script:
+  - pip install coala
+
+script:
+  - coala-ci
