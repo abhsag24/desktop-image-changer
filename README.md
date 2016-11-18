@@ -1,8 +1,7 @@
 UIP Is Pretty
 =============
 
-UIP Scrapes wallpapers from reddit and applies them as wallpapers on a
-gnome Desktop according to a schedule.
+UIP Scrapes wallpapers from reddit and applies them on your desktop according to a schedule. Works with windows, mac and gtk based desktops on Linux.
 
 Set Up
 ======
