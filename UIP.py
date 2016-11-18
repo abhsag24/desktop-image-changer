@@ -1,15 +1,18 @@
-from uiplib.scheduler import scheduler
+import sys
+from scheduler import scheduler
 
 if __name__ == "__main__":
     print("Hey this is UIP! you can use it to download"
           " images from reddit and also to schedule the setting of these"
           " images as your desktop wallpaper.")
     try:
-        print("Press 1 to connect to internet"
-              " or any other key to use this"
-              " application in offline mode")
-        offline = int(input()) != 1
+        offline = False
+        if len(sys.argv) != 0 and str(sys.argv[1]) == '--offline':
+            print("You have choosen to run UIP in offline mode.")
+            offline = True
+        else:
+            print("UIP will now connect to internet and download images"
+                  " from reddit.")
         scheduler(offline)
     except KeyboardInterrupt:
-        import sys
         sys.exit(0)
