@@ -11,7 +11,7 @@ class scheduler():
 
     def __init__(self, offline):
         directory = os.path.join(CURR_DIR, PICS_FOLDER)
-        print(time.time())
+        print(time.ctime())
         if not offline:
             fetch = Thread(target=self.initFetch)
             # all child threads need to be daemons to die upon main thread exit
