@@ -39,11 +39,28 @@ Screenshot
 
 ![alt text]( examples/UIP_screenshot.png )
 
+HOW TO PACKAGE
+==============
+To package into **source distribution**, run the following command
+```
+python setup.py sdist
+```
+**How to test?** (this installs UIP to your library)
+```
+cd dist/
+tar xzf UIP-<version-no>.tar.gz
+cd UIP-<version-no>/
+python setup.py install
+```
+How to run?
+```
+UIP.py
+```
 
 HOW TO CONTRIBUTE
 =================
 
-UIP is in its very early development stage, you can go over the issues on the 
+UIP is in its very early development stage, you can go over the issues on the
 github issues page and send in a PR.
 
 your commits in the PR should be of the form:

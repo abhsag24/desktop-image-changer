@@ -4,10 +4,10 @@ from urllib.request import urlopen
 from urllib.request import urlretrieve
 import os
 import sys
-from constants import (PICS_FOLDER,
-                       NUMBER_OF_IMAGES_TO_PARSE,
-                       CURR_DIR,
-                       PICS_FOLDER)
+from uiplib.constants import (PICS_FOLDER,
+                              NUMBER_OF_IMAGES_TO_PARSE,
+                              CURR_DIR,
+                              PICS_FOLDER)
 
 
 def make_soup(url):

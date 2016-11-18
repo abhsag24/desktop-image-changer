@@ -1,6 +1,6 @@
 from uiplib.setWallpaper import change_background
 import os
-from constants import CURR_DIR, PICS_FOLDER, WEBSITE, TIMEOUT
+from uiplib.constants import CURR_DIR, PICS_FOLDER, WEBSITE, TIMEOUT
 import random
 import time
 from uiplib.scrape import get_images
