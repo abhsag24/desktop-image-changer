@@ -1,9 +1,9 @@
-from setWallpaper import change_background
+from uiplib.setWallpaper import change_background
 import os
 from constants import CURR_DIR, PICS_FOLDER, WEBSITE, TIMEOUT
 import random
 import time
-from scrape import get_images
+from uiplib.scrape import get_images
 from threading import Thread
 
 
