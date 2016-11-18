@@ -17,7 +17,7 @@ class scheduler():
             # all child threads need to be daemons to die upon main thread exit
             fetch.setDaemon(True)
             fetch.start()
-            while not os.path.isdir(os.path.join(CURR_DIR, PICS_FOLDER)):
+            while not (os.path.isdir(os.path.join(CURR_DIR, PICS_FOLDER)) and os.listdir(directory)!=[]):
                 print('Downloading images..')
                 time.sleep(60)
         elif not os.path.exists(directory):
