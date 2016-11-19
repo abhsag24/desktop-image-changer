@@ -16,18 +16,33 @@ class ParseSettings:
     def get_settings_from_file(self):
         with open(settings_file_path, "r") as settings_file:
             settings = json.loads(settings_file.read())
-
         return settings
 
     def get_settings_from_cli(self):
-        parser = argparse.ArgumentParser()
-        parser.add_argument("--offline", action="store_true",
+        self.parser = argparse.ArgumentParser()
+        self.parser.add_argument("--offline", action="store_true",
                         help="Runs UIP in offline mode.")
-        parser.add_argument("--flush", action="store_true",
+        self.parser.add_argument("--flush", action="store_true",
                         help="Delete all downloaded wallpapers"
                              " and downloads new ones. "
                              "When combined with --offline,"
                              " deletes the wallpapers and exits.")
-        args = parser.parse_args()
-        settings = {'offline' : args.offline, 'flush' : args.flush}
+        self.parser.add_argument("--no-of-images",
+                        help="Specify the no. of images to be "
+                             "downloaded. This should not be "
+                             "combined with --offline flag.")
+        args = self.parser.parse_args()
+
+        settings = {
+            'offline': args.offline,
+            'flush': args.flush,
+            'error': args.no_of_images and args.offline,
+        }
+        if args.no_of_images:
+            settings['no-of-images'] = args.no_of_images
+
         return settings
+
+    def show_help(self):
+        self.parser.print_help()
+

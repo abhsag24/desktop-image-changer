@@ -7,8 +7,13 @@ def main():
           " images from reddit and also to schedule the setting of these"
           " images as your desktop wallpaper.")
 
-    settings = ParseSettings().settings
+    settingsParser = ParseSettings()
+    settings = settingsParser.settings
     try:
+        if settings['error']:
+            print("\nWRONG USAGE OF FLAGS --no-of-images AND --offline")
+            settingsParser.show_help()
+            sys.exit(0)
         if settings['offline']:
             print("You have choosen to run UIP in offline mode.")
         if settings['flush']:
@@ -24,7 +29,8 @@ def main():
         scheduler(settings['offline'],
                   settings['pics-folder'],
                   settings['timeout'],
-                  settings['website'][0])
+                  settings['website'][0],
+                  settings['no-of-images'])
     except KeyboardInterrupt:
         print("Exiting UIP hope you had a nice time :)")
         sys.exit(0)

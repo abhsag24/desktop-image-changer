@@ -14,10 +14,11 @@ except ImportError:
 
 class scheduler():
 
-    def __init__(self, offline, pics_folder, timout, website):
+    def __init__(self, offline, pics_folder, timout, website, count):
         self.website = website
         self.timeout = timout
         self.directory = pics_folder
+        self.count = count
         if not offline:
             fetch = Thread(target=self.initFetch)
             # all child threads need to be daemons to die upon main thread exit
@@ -41,7 +42,7 @@ class scheduler():
 
     def initFetch(self):
         try:
-            get_images(self.website, self.directory)
+            get_images(self.website, self.directory, self.count)
         except ValueError as e:
             print("File could not be retrieved.", e)
 

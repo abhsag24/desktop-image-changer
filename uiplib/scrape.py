@@ -4,7 +4,6 @@ from urllib.request import urlopen
 from urllib.request import urlretrieve
 import os
 import sys
-from uiplib.settings import NUMBER_OF_IMAGES_TO_PARSE
 
 
 def make_soup(url):
@@ -28,14 +27,15 @@ def dlProgress(count, blockSize, totalSize):
     sys.stdout.write("\r" + "...%d%%" % percent)
     sys.stdout.flush()
 
-
-def get_images(url, directory):
+def get_images(url, directory, count):
     '''
     scrape images from /r/wallpapers
     '''
     image_links = []
     p_url = url
-    while len(image_links) < NUMBER_OF_IMAGES_TO_PARSE:
+    no_of_images = int(count)
+
+    while len(image_links) < no_of_images:
         soup = make_soup(p_url)
         # this makes a list of bs4 element tags
         thumbnails = soup.find_all("a", class_="thumbnail", href=True)
@@ -50,7 +50,7 @@ def get_images(url, directory):
         for link in thumbnails:
             if link['href'].endswith(('jpg', 'png', 'jpeg', 'bmp')):
                 image_links.append(link['href'])
-            if(len(image_links) == NUMBER_OF_IMAGES_TO_PARSE):
+            if(len(image_links) >= no_of_images):
                 break
 
         # gets the link of next page
