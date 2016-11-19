@@ -5,7 +5,13 @@ import random
 import time
 from uiplib.scrape import get_images
 from threading import Thread
-
+import sys
+from select import select
+try:
+    import msvcrt
+except ImportError:
+    #not on windows
+    pass
 
 class scheduler():
 
@@ -25,6 +31,8 @@ class scheduler():
             os.makedirs(directory)
 
         if os.listdir(directory) != []:
+            print("You can wait for next wallpaper or skip this wallpaper"
+                  " by just pressing enter.")
             self.change_random()
             self.setStartTime(time.time())
             self.changeCycle()
@@ -44,15 +52,37 @@ class scheduler():
         print("changing desktop wallpaper to: ", path)
         change_background(path)
 
+    def kbhit(self):
+        ''' Returns True if keyboard character was hit, False otherwise.
+        '''
+        if os.name == 'nt':
+            return msvcrt.kbhit()
+        else:
+            dr,dw,de = select([sys.stdin], [], [], 0)
+            return dr != []
+
+    def getch(self):
+        ''' Returns a keyboard character after kbhit() has been called.
+            Should not be called in the same program as getarrow().
+        '''
+        s = ''
+        if os.name == 'nt':
+            return msvcrt.getch().decode('utf-8')
+        else:
+            return sys.stdin.read(1)
+
     def changeCycle(self):
         while True:
-            delta = self.deltaTime()
-            if delta >= TIMEOUT:
+            if not self.kbhit():
+                delta = self.deltaTime()
+                if delta >= TIMEOUT:
+                    self.change_random()
+                    self.time = time.time()
+            else:
+                self.getch()
+                print("Skipping this wallpaper")
                 self.change_random()
                 self.time = time.time()
-
-            else:
-                time.sleep(TIMEOUT-delta)
 
     def setStartTime(self, time):
         self.time = time
