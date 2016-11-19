@@ -36,23 +36,33 @@ def get_images(url):
     '''
     scrape images from /r/wallpapers
     '''
-    soup = make_soup(url)
-    # this makes a list of bs4 element tags
-    thumbnails = soup.find_all("a", class_="thumbnail", href=True)
-
-    """Thumbnails in /r/wallpapers contain href to original
-    full-sized image."""
-
     image_links = []
-    if not thumbnails:
-        print('No matching image found')
-        return
+    p_url = url
+    while len(image_links) < NUMBER_OF_IMAGES_TO_PARSE:
+        soup = make_soup(p_url)
+        # this makes a list of bs4 element tags
+        thumbnails = soup.find_all("a", class_="thumbnail", href=True)
 
-    for link in thumbnails:
-        if link['href'].endswith(('jpg', 'png', 'jpeg', 'bmp')):
-            image_links.append(link['href'])
-        if(len(image_links) == NUMBER_OF_IMAGES_TO_PARSE):
-            break
+        """Thumbnails in /r/wallpapers contain href to original
+        full-sized image."""
+
+        if not thumbnails:
+            print('No matching image found')
+            return
+
+        for link in thumbnails:
+            if link['href'].endswith(('jpg', 'png', 'jpeg', 'bmp')):
+                image_links.append(link['href'])
+            if(len(image_links) == NUMBER_OF_IMAGES_TO_PARSE):
+                break
+        # This will store the first "a" tag with attribute rel = "nofollow
+        # next" to p_url
+        p_url = soup.find("a", attrs={"rel" : "nofollow next"})
+        # This will get the value of attribute 'href' in p_url
+        p_url = p_url.attrs['href']
+
+    for link in image_links:
+        print(link)
 
     for image in image_links:
         path = os.path.join(CURR_DIR, PICS_FOLDER)
