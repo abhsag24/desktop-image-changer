@@ -12,10 +12,16 @@ To install the requirements first run the command
 ```
 sudo pip install -r requirements.txt
 ```
+There is no `sudo` in Windows. Hence, you should run the command:
+```
+pip install -r requirements.txt
+```
+
 if you're on a mac, you would need to also run this command
 ```
 sudo pip install -r mac-requirements.txt
 ```
+
 if you're on a linux system you would need to install
 pygobject, to install on debian use:
 ```
