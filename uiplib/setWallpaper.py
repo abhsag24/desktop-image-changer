@@ -25,10 +25,10 @@ def change_windows_background(filename):
 
     SPI_SETDESKWALLPAPER = 0x14  # which command (20)
     SPIF_UPDATEINIFILE = 0x2  # forces instant update
-    print(ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER,
+    ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER,
                                                      0,
                                                      filename,
-                                                     SPIF_UPDATEINIFILE))
+                                                     SPIF_UPDATEINIFILE)
 
 
 def change_osx_background(filename):
