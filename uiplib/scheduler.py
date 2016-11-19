@@ -60,7 +60,3 @@ class scheduler():
     def deltaTime(self):
         return (time.time()-self.time)
 
-    def checkTime(self):
-        if self.deltaTime() > 30:
-            return True
-        return False
