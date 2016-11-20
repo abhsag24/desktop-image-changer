@@ -7,15 +7,12 @@ gnome Desktop according to a schedule.
 Set Up
 ======
 
-To install the requirements first run the command
+To install the requirements, you need to run the command
 
 ```
-sudo pip install -r requirements.txt
+python setup.py install
 ```
-if you're on a mac, you would need to also run this command
-```
-sudo pip install -r mac-requirements.txt
-```
+
 if you're on a linux system you would need to install
 pygobject, to install on debian use:
 ```
