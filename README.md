@@ -3,6 +3,13 @@ UIP Is Pretty
 
 UIP Scrapes wallpapers from reddit and applies them on your desktop according to a schedule. Works with windows, mac and gtk based desktops on Linux.
 
+Examples of UIP wallpapers
+==========================
+
+![alt text]( examples/UIP_screenshot.png )  
+![alt text]( examples/mac_wallpaper.png )  
+![alt text]( examples/windows_wallpaper.png )  
+
 Set Up
 ======
 
@@ -51,12 +58,6 @@ Contact Us
 https://gitter.im/NIT-dgp/General
 
 
-Screenshot
-==========
-
-![alt text]( examples/UIP_screenshot.png )  
-![alt text]( examples/mac_wallpaper.png )  
-![alt text]( examples/windows_wallpaper.png )  
 HOW TO PACKAGE
 ==============
 To package into **source distribution**, run the following command
