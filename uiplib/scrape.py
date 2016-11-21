@@ -23,8 +23,8 @@ def dlProgress(count, blockSize, totalSize):
     '''
     Show Progress bar
     '''
-    percent = int(count*blockSize*100/totalSize)
-    sys.stdout.write("\r" + "...%d%%" % percent)
+    percent = int(count*blockSize*100/totalSize)/2
+    sys.stdout.write("\r[%s%s]" % ('='*percent, ' '*(50-percent)))
     sys.stdout.flush()
 
 def get_images(url, directory, count):
