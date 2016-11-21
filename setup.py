@@ -6,6 +6,7 @@ from uiplib.settings import (HOME_DIR,
 import sys
 import os
 import json
+import shutil
 
 def get_contents(filename):
     file = open(filename, 'r').readlines()
@@ -15,8 +16,10 @@ def get_contents(filename):
     return out
 
 #Make Home Directory
-if not os.path.exists(HOME_DIR):
-    os.makedirs(HOME_DIR)
+if os.path.exists(HOME_DIR):
+    shutil.rmtree(HOME_DIR)
+
+os.makedirs(HOME_DIR)
 
 if not os.path.isfile(settings_file_path):
     file_data = {'timeout' : 30*60,

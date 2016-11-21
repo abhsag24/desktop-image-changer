@@ -20,6 +20,11 @@ class ParseSettings:
 
     def get_settings_from_cli(self):
         self.parser = argparse.ArgumentParser()
+        self.parser.add_argument("--service",
+                            help="Run UIP as a service, "
+                            "--service start: to start UIP, "
+                            "--service stop: to stop UIP, "
+                            "--service restart: to restart UIP\n")
         self.parser.add_argument("--offline", action="store_true",
                         help="Runs UIP in offline mode.")
         self.parser.add_argument("--flush", action="store_true",
@@ -34,6 +39,7 @@ class ParseSettings:
         args = self.parser.parse_args()
 
         settings = {
+            'service' : args.service,
             'offline': args.offline,
             'flush': args.flush,
             'error': args.no_of_images and args.offline,
@@ -45,4 +51,3 @@ class ParseSettings:
 
     def show_help(self):
         self.parser.print_help()
-
