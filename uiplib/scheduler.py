@@ -12,6 +12,11 @@ except ImportError:
     #not on windows
     pass
 
+percentage= 0.0
+
+def getPercentage(unew, uold, start):
+    return 100 * (float(unew) - float(uold)) / (time.time()-float(start))
+
 class scheduler():
 
     def __init__(self, offline, pics_folder, timout, website, count):
@@ -19,6 +24,7 @@ class scheduler():
         self.timeout = timout
         self.directory = pics_folder
         self.count = count
+
         if not offline:
             fetch = Thread(target=self.initFetch)
             # all child threads need to be daemons to die upon main thread exit
@@ -72,6 +78,7 @@ class scheduler():
             return sys.stdin.read(1)
 
     def changeCycle(self):
+        uold, sold, cold, c, e = os.times()
         while True:
             if not self.kbhit():
                 delta = self.deltaTime()
@@ -83,6 +90,12 @@ class scheduler():
                 print("Skipping this wallpaper")
                 self.change_random()
                 self.time = time.time()
+            unew, snew, cnew, c, e = os.times()
+            start=time.time()
+            percentage = getPercentage(unew, uold, start)
+            if percentage > 30.0:
+                time.sleep(0.1)
+
 
     def setStartTime(self, time):
         self.time = time
