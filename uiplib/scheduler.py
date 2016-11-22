@@ -9,7 +9,7 @@ from select import select
 try:
     import msvcrt
 except ImportError:
-    #not on windows
+    #msvcrt module is only available on windows
     pass
 
 class scheduler():
@@ -73,16 +73,15 @@ class scheduler():
 
     def changeCycle(self):
         while True:
-            if not self.kbhit():
+            if self.kbhit() and self.getch() == 's':
+                print("Skipping this wallpaper")
+                self.change_random()
+                self.time = time.time()
+            else:
                 delta = self.deltaTime()
                 if delta >= self.timeout:
                     self.change_random()
                     self.time = time.time()
-            else:
-                self.getch()
-                print("Skipping this wallpaper")
-                self.change_random()
-                self.time = time.time()
 
     def setStartTime(self, time):
         self.time = time
