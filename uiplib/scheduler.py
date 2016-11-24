@@ -6,6 +6,7 @@ from uiplib.scrape import get_images
 from threading import Thread
 import sys
 from select import select
+
 try:
     import msvcrt
 except ImportError:
@@ -26,10 +27,22 @@ class scheduler():
         self.count = count
 
         if not offline:
-            fetch = Thread(target=self.initFetch)
-            # all child threads need to be daemons to die upon main thread exit
-            fetch.setDaemon(True)
-            fetch.start()
+            try:
+                thread_nos = len(self.website)
+                for i in range(thread_nos) :
+                    #Init the thread
+                    fetch_thread = Online_Fetch(self.website[i],
+                                                self.directory, self.count )
+                    #die upon main thread exit
+                    fetch_thread.setDaemon(True)
+
+                    # Start new Threads
+                    fetch_thread.start()
+
+
+            except ValueError as e:
+                print("File could not be retrieved.", e)
+
             while not ((os.path.isdir(self.directory) and
                         os.listdir(self.directory) != [])):
                 print('Downloading images..')
@@ -45,12 +58,6 @@ class scheduler():
             self.changeCycle()
         else:
             print("No downloaded images. Try again in online mode.")
-
-    def initFetch(self):
-        try:
-            get_images(self.website, self.directory, self.count)
-        except ValueError as e:
-            print("File could not be retrieved.", e)
 
     def change_random(self):
         filename = random.choice(os.listdir(self.directory))
@@ -102,3 +109,15 @@ class scheduler():
 
     def deltaTime(self):
         return (time.time()-self.time)
+
+
+#Class to create threads for get_images
+class Online_Fetch(Thread):
+    def __init__(self, url, directory, count):
+        Thread.__init__(self)
+        self.url = url
+        self.directory = directory
+        self.count = count
+
+    def run(self):
+        get_images(self.url, self.directory, self.count)

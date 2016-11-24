@@ -37,17 +37,38 @@ def get_images(url, directory, count):
     '''
     image_links = []
     no_of_images = int(count)
-    page = make_json(url)
-    for sub in page['data']['children']: # structure of reddit API
-        for image in sub['data']['preview']['images']:
-            if(len(image_links)<no_of_images):
-                image_links.append(image['source']['url'])
+
+    if 'unsplash' in url:       #For Unsplash
+        soup = make_soup(url)
+        '''Selects desired bs4 tags, soup.select is a recursive function,
+           it searches for classes/tags within classes/tags'''
+        a_tags = soup.select('.y5w1y .hduMF .tPMQE a')
+
+        if not a_tags:
+            print ('No matching image found')
+            return
+
+        for a_tag in a_tags:
+            image_links.append(a_tag['href'])
+            if(len(image_links) >= no_of_images):
+                break
+
+    elif 'reddit' in url:     #For Reddit
+        page = make_json(url)
+        for sub in page['data']['children']: # structure of reddit API
+            for image in sub['data']['preview']['images']:
+                if(len(image_links)<no_of_images):
+                    image_links.append(image['source']['url'])
 
     for image in image_links:
         if not os.path.exists(directory):
             os.makedirs(directory)
-        filename = image.split('/')[-1]
-        filename = filename[: filename.find('?')]
+        if  'unsplash' in url:    #Unsplash
+            filename = image.split('/')[-2]+".jpg"
+        elif 'reddit' in url:     #Reddit
+            filename = image.split('/')[-1]
+            filename = filename[: filename.find('?')]
+
         try:
             urlretrieve(image,
                         os.path.join(directory,filename),

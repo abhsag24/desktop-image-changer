@@ -2,7 +2,7 @@ import os
 import json, argparse
 
 HOME_DIR = os.path.join(os.path.expanduser("~"), '.uip')
-NUMBER_OF_IMAGES_TO_PARSE = 24
+NUMBER_OF_IMAGES_TO_PARSE = 15
 DEFAULT_PICS_FOLDER = os.path.join(HOME_DIR, 'pics')
 
 settings_file_path = os.path.join(HOME_DIR, "settings.json")

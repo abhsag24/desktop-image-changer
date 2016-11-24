@@ -22,7 +22,8 @@ if not os.path.isfile(settings_file_path):
     file_data = {'timeout' : 30*60,
                  'no-of-images': NUMBER_OF_IMAGES_TO_PARSE,
                  'pics-folder' : DEFAULT_PICS_FOLDER,
-                 'website' : ['https://www.reddit.com/r/wallpapers/']}
+                 'website' : ['https://unsplash.com/new',
+                              'https://www.reddit.com/r/wallpapers/']}
     with open(settings_file_path,"w") as settings_file:
         settings_file.write(json.dumps(file_data))
 
