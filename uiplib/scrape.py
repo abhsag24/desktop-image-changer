@@ -55,10 +55,16 @@ def get_images(url, directory, count):
 
     elif 'reddit' in url:     #For Reddit
         page = make_json(url)
-        for sub in page['data']['children']: # structure of reddit API
-            for image in sub['data']['preview']['images']:
-                if(len(image_links)<no_of_images):
-                    image_links.append(image['source']['url'])
+        try:
+            for sub in page['data']['children']: # structure of reddit API
+                for image in sub['data']['preview']['images']:
+                    if(len(image_links)<no_of_images):
+                        image_links.append(image['source']['url'])
+        except (IndexError, KeyError) as e:
+            print("You seem to be having some issues with your internet."
+                  "Please contact us at our github repo 'NIT-dgp/UIP'"
+                  "If you feel it isn't the case with your internet.")
+
 
     for image in image_links:
         if not os.path.exists(directory):
