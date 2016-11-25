@@ -1,2 +1,3 @@
 bs4~=0.0.1
 requests~=2.11.1
+daemoniker~=0.2.2

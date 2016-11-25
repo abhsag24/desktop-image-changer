@@ -22,6 +22,10 @@ class ParseSettings:
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument("--offline", action="store_true",
                         help="Runs UIP in offline mode.")
+        self.parser.add_argument("--service",
+                                 help="Run UIP as a service, "
+                                      "--service start: to start UIP, "
+                                      "--service stop: to stop UIP\n")
         self.parser.add_argument("--flush", action="store_true",
                         help="Delete all downloaded wallpapers"
                              " and downloads new ones. "
@@ -34,6 +38,7 @@ class ParseSettings:
         args = self.parser.parse_args()
 
         settings = {
+            'service' : args.service,
             'offline': args.offline,
             'flush': args.flush,
             'error': args.no_of_images and args.offline,

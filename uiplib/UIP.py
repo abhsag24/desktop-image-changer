@@ -1,15 +1,40 @@
 import sys, os, shutil
 from uiplib.settings import ParseSettings
 from uiplib.scheduler import scheduler
+from uiplib.settings import HOME_DIR
+from daemoniker import Daemonizer, send, SIGTERM
 
 def main():
+    settingsParser = ParseSettings()
+    settings = settingsParser.settings
+    pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
+    if settings['service']:
+        if 'start' == str(settings['service']):
+            with Daemonizer() as (is_setup, daemonizer):
+                if is_setup:
+                    print("UIP will now run as a serice.")
+                try:
+                    is_parent = daemonizer(pid_file)
+                except SystemExit:
+                    print("UIP service already, running "
+                          "Close previous app by running UIP --service stop")
+
+        elif 'stop' == str(settings['service']):
+            try:
+                send(pid_file, SIGTERM)
+                os.remove(pid_file)
+                sys.exit(0)
+            except Exception as e:
+                print("you need to start a service first", str(e))
+                sys.exit(0)
+        else:
+            print('Wrong option for service flag see --help')
+
+
     print("Hey this is UIP! you can use it to download"
           " images from reddit and also to schedule the setting of these"
           " images as your desktop wallpaper."
           " \nPress ctrl-c to exit")
-
-    settingsParser = ParseSettings()
-    settings = settingsParser.settings
     try:
         if settings['error']:
             print("\nWRONG USAGE OF FLAGS --no-of-images AND --offline")
