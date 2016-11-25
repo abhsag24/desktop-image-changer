@@ -1,11 +1,13 @@
 from uiplib.setWallpaper import change_background
+from uiplib.utils import get_percentage, onlineFetch
+
 import os
-import random
 import time
 from uiplib.scrape import get_images
 from threading import Thread
 import sys
 from select import select
+import random
 
 try:
     import msvcrt
@@ -13,10 +15,6 @@ except ImportError:
     #not on windows
     pass
 
-percentage= 0.0
-
-def getPercentage(unew, uold, start):
-    return 100 * (float(unew) - float(uold)) / (time.time()-float(start))
 
 class scheduler():
 
@@ -31,7 +29,7 @@ class scheduler():
                 thread_nos = len(self.website)
                 for i in range(thread_nos) :
                     #Init the thread
-                    fetch_thread = Online_Fetch(self.website[i],
+                    fetch_thread = onlineFetch(self.website[i],
                                                 self.directory, self.count )
                     #die upon main thread exit
                     fetch_thread.setDaemon(True)
@@ -99,7 +97,7 @@ class scheduler():
                 self.time = time.time()
             unew, snew, cnew, c, e = os.times()
             start=time.time()
-            percentage = getPercentage(unew, uold, start)
+            percentage = get_percentage(unew, uold, start)
             if percentage > 30.0:
                 time.sleep(0.1)
 
@@ -109,15 +107,3 @@ class scheduler():
 
     def deltaTime(self):
         return (time.time()-self.time)
-
-
-#Class to create threads for get_images
-class Online_Fetch(Thread):
-    def __init__(self, url, directory, count):
-        Thread.__init__(self)
-        self.url = url
-        self.directory = directory
-        self.count = count
-
-    def run(self):
-        get_images(self.url, self.directory, self.count)
