@@ -54,6 +54,10 @@ def main():
         if not settings['offline']:
             print("UIP will now connect to internet and download images"
                   " from reddit and unsplash.")
+        if settings['ui']:
+            app = MainWindow(settings)
+            app.run()
+            sys.exit(0)
         scheduler(settings['offline'],
                   settings['pics-folder'],
                   settings['timeout'],

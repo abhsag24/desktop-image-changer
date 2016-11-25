@@ -35,6 +35,9 @@ class ParseSettings:
                         help="Specify the no. of images to be "
                              "downloaded. This should not be "
                              "combined with --offline flag.")
+        self.parser.add_argument("--ui", action="store_true",
+                        help="Start the app in Graphical "
+                             "Interface mode.")
         args = self.parser.parse_args()
 
         settings = {
@@ -42,6 +45,7 @@ class ParseSettings:
             'offline': args.offline,
             'flush': args.flush,
             'error': args.no_of_images and args.offline,
+            'ui': args.ui,
         }
         if args.no_of_images:
             settings['no-of-images'] = args.no_of_images
