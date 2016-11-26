@@ -6,9 +6,9 @@ UIP Scrapes wallpapers from reddit and applies them on your desktop according to
 Examples of UIP wallpapers
 ==========================
 
-![alt text]( examples/UIP_screenshot.png )  
-![alt text]( examples/mac_wallpaper.png )  
-![alt text]( examples/windows_wallpaper.png )  
+![alt text]( examples/UIP_screenshot.png )
+![alt text]( examples/mac_wallpaper.png )
+![alt text]( examples/windows_wallpaper.png )
 
 Set Up
 ======
@@ -19,24 +19,17 @@ To install the requirements first run the command
 sudo python3 setup.py install
 ```
 
-then
-
-```
-sudo pip install -r requirements.txt
-```
-
-if you're on a mac, you would need to also run this command
-```
-sudo pip install -r mac-requirements.txt
-```
-
 if you're on a linux system you would need to install
 pygobject, to install on debian use:
 ```
 sudo apt-get install python3-gi
 ```
+to insall on arch use:
+```
+sudo pip install pygobject
+```
 
->Note: there is no sudo for windows as well as when you have root privelages. 
+>Note: there is no sudo for windows as well as when you have root privelages.
 Just run commands without sudo
 
 >Note: some setups use python instead of python3 and pip3 instead of pip
