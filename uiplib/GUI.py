@@ -4,35 +4,36 @@ from tkinter.ttk import *
 from PIL import Image, ImageTk
 from queue import Queue
 import os
-import time # remove this later on
 
 class Gallery(Frame):
-    def __init__(self, master, imagePath):
+    def __init__(self, master):
         Frame.__init__(self, master)
-        self.width = 400
-        self.height = 300
-        if not imagePath:
-            self.showError()
-        else:
-            self.setup(imagePath)
+        self.image = None
+        self.cv = None
+        self.label = None
 
-
-    def showError(self):
+    def show_error(self):
+        self.image = None
+        self.cv = None
         self.label = Label(self, wraplength=150,
-                                 justify=CENTER,
-                                 text="No images found. "
-                                      "Please refresh and try again!")
+                                justify=CENTER,
+                                text="No images found. "
+                                    "Please refresh and try again!")
         self.label.pack(padx=50, pady=50)
 
 
-    def setup(self, imagePath):
-        self.cv = Canvas(self, width=self.width, height=self.height)
-        self.cv.pack(fill=BOTH, expand=YES)
+    def set_image(self, imagePath):
+        self.label = None
+        width = 600
+        height = 340
+        if not self.cv:
+            self.cv = Canvas(self, width=width, height=height)
+            self.cv.pack(fill=BOTH, expand=YES)
         self.image = Image.open(imagePath)
-        self.image = self.image.resize((self.width, self.height),
+        self.image = self.image.resize((width*2, height*2),
                                         Image.ANTIALIAS)
         self.tk_image = ImageTk.PhotoImage(self.image)
-        cv.create_image(0, 0, image=self.tk_image)
+        self.cv.create_image(0, 0, image=self.tk_image)
 
 class MainWindow:
     ''' The main window that houses the app '''
@@ -45,12 +46,13 @@ class MainWindow:
         self.root.title("UIP")
         # self.root.wm_iconbitmap() sets icon bitmap
         self.queue = Queue()
-        # create the UI
-        self.createUI()
         self.index = 0
+        self.images = []
+        self.update_images()
+        # create the UI
+        self.create_ui()
 
-
-    def createUI(self):
+    def create_ui(self):
         ''' Method to initialize UI '''
         self.container = Frame(self.root)
         self.container.grid(row=0, column=0)
@@ -63,14 +65,18 @@ class MainWindow:
         self.mainFrame.grid(row=1,column=0, sticky=N+E+W+S)
         self.footerFrame.grid(row=2,column=0, sticky=S+W+E)
 
-        self.nextButton = Button(self.mainFrame, text=">")
-        self.prevButton = Button(self.mainFrame, text="<")
+        self.nextButton = Button(self.mainFrame,
+                                 text=">",
+                                 command=self.next_wallpaper)
+        self.prevButton = Button(self.mainFrame,
+                                 text="<",
+                                 command=self.prev_wallpaper)
         self.nextButton.pack(side=RIGHT, padx=5, pady=5)
         self.prevButton.pack(side=LEFT, padx=5, pady=5)
 
         self.setWallpaperBtn = Button(self.footerFrame,
                                       text="Set Wallpaper",
-                                      command=self.setWallpaper)
+                                      command=self.set_wallpaper)
         self.refreshBtn = Button(self.footerFrame,
                                  text="Refresh",
                                  command=self.refresh)
@@ -80,11 +86,16 @@ class MainWindow:
         self.progress = 0
         self.progressBar = None
 
-        self.gallery = Gallery(self.mainFrame, None)
+        self.gallery = Gallery(self.mainFrame)
         self.gallery.pack(fill=BOTH)
 
+        if len(self.images) != 0:
+            self.gallery.set_image(self.images[self.index])
+        else:
+            self.gallery.show_error()
 
-    def showProgess(self, show):
+
+    def show_progess(self, show):
         if show:
             self.progressBar = Progressbar(self.headerFrame,
                                         orient = HORIZONTAL,
@@ -101,23 +112,37 @@ class MainWindow:
 
 
     def run(self):
-        self.updateUI()
+        self.update_ui()
         # run the main event loop of UI
         self.root.mainloop()
 
 
-    def updateUI(self):
+    def update_ui(self):
         # update UI with data received
         while self.queue and not self.queue.empty():
             pass
-        print(time.ctime()) #remove this comment
         # update UI after every 200ms
-        self.root.after(200, self.updateUI)
+        self.root.after(200, self.update_ui)
+
+    def next_wallpaper(self):
+        self.index = (self.index + 1) % len(self.images)
+        self.gallery.set_image(self.images[self.index])
 
 
-    def setWallpaper(self):
+    def prev_wallpaper(self):
+        self.index -= 1
+        self.gallery.set_image(self.images[self.index])
+
+
+    def set_wallpaper(self):
         print("Set wallpaper clicked!")
 
 
     def refresh(self):
         print("Refresh Clicked!")
+
+    def update_images(self):
+        directory = self.settings['pics-folder']
+        files = os.listdir(directory)
+        self.images = [os.path.join(directory, file) for file in files
+                       if (file.endswith('.png') or file.endswith('.jpg'))]

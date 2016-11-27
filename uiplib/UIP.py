@@ -2,6 +2,7 @@ import sys, os, shutil
 from uiplib.settings import ParseSettings
 from uiplib.scheduler import scheduler
 from uiplib.settings import HOME_DIR
+from uiplib.GUI import MainWindow
 from daemoniker import Daemonizer, send, SIGTERM
 
 def main():
