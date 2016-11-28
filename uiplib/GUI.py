@@ -1,4 +1,5 @@
 from uiplib.scheduler import scheduler
+from uiplib.setWallpaper import change_background
 from tkinter import *
 from tkinter.ttk import *
 from PIL import Image, ImageTk
@@ -135,8 +136,8 @@ class MainWindow:
 
 
     def set_wallpaper(self):
-        print("Set wallpaper clicked!")
-
+        image = self.images[self.index]
+        change_background(image)
 
     def refresh(self):
         print("Refresh Clicked!")
