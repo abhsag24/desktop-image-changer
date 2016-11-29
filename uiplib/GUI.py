@@ -43,6 +43,7 @@ class MainWindow:
         self.settings = settings
         # base window
         self.root = Tk()
+        self.root.resizable(width=False, height=False)
         # set window title
         self.root.title("UIP")
         # self.root.wm_iconbitmap() sets icon bitmap
@@ -75,14 +76,18 @@ class MainWindow:
         self.nextButton.pack(side=RIGHT, padx=5, pady=5)
         self.prevButton.pack(side=LEFT, padx=5, pady=5)
 
+        self.downloadBtn = Button(self.footerFrame,
+                                  text="Download",
+                                  command=self.download)
         self.setWallpaperBtn = Button(self.footerFrame,
                                       text="Set Wallpaper",
                                       command=self.set_wallpaper)
-        self.refreshBtn = Button(self.footerFrame,
-                                 text="Refresh",
-                                 command=self.refresh)
-        self.setWallpaperBtn.pack(side=LEFT, padx=5, pady=5)
-        self.refreshBtn.pack(side=RIGHT, padx=5, pady=5)
+        self.flushBtn = Button(self.footerFrame,
+                                 text="Flush",
+                                 command=self.flush)
+        self.setWallpaperBtn.pack(padx=5, pady=5)
+        self.downloadBtn.pack(padx=5, pady=5)
+        self.flushBtn.pack(padx=5, pady=5)
 
         self.progress = 0
         self.progressBar = None
@@ -139,8 +144,11 @@ class MainWindow:
         image = self.images[self.index]
         change_background(image)
 
-    def refresh(self):
-        print("Refresh Clicked!")
+    def download(self):
+        pass
+
+    def flush(self):
+        print("Flush Clicked!")
 
     def update_images(self):
         directory = self.settings['pics-folder']
