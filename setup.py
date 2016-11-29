@@ -18,6 +18,9 @@ def get_contents(filename):
 if not os.path.exists(HOME_DIR):
     os.makedirs(HOME_DIR)
 
+if not os.path.exists(DEFAULT_PICS_FOLDER):
+    os.makedirs(DEFAULT_PICS_FOLDER)
+
 if not os.path.isfile(settings_file_path):
     file_data = {'timeout' : 30*60,
                  'no-of-images': NUMBER_OF_IMAGES_TO_PARSE,

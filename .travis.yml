@@ -6,7 +6,8 @@ python:
 sudo: true
 
 before_script:
-  - pip install coala
+  - pip install -r test-requirements.txt
 
 script:
   - coala-ci
+  - pytest

@@ -83,20 +83,28 @@ commit body
 Fixes <issue number>
 ```
 
-UIP uses coala as a linter, to install use:
-```
-sudo pip install coala
-```
+where short log is the area/filename where you make the change
+commit message is the very brief description of the change made by you and any
+other additional details go into the commit body.
 
-before you push remember to run
+TESTING
+=======
+
+While developing, to test, you should first install the test-requirements
+by running:
+
+```
+pip install -r test-requirements.txt
+```
+then test your work by the command:
+```
+pytest
+```
+If you want to lint your files you can run
 ```
 coala
 ```
 and commit all changes suggested
-
-where short log is the area/filename where you make the change
-commit message is the very brief description of the change made by you and any
-other additional details go into the commit body.
 
 Do remember to keep your master branch updated at all times
 and always work on a different branch.

@@ -6,3 +6,4 @@ dist/
 build/
 UIP.egg-info/
 README
+.cache/
