@@ -13,12 +13,15 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
 
 before_script:
-  - pip3 install -r test-requirements.txt
+  - make test-install
 
 script:
-  - python3 setup.py install
-  - coala-ci
-  - pytest
+  - make install
+  - make lint
+  - make test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 matrix:
   include:

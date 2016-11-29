@@ -1,21 +1,21 @@
 PYTHON = python3
 PIP = pip3
-TEST_PATH = ./tests/
 SETUP_FILE = setup.py
 MODULE_NAME = UIP
+TEST_REQUIREMENTS = test-requirements.txt
 
 clean-pyc:
 	find . -name '__pycache__' \
-		-exec rm --force --recursive {} +
+		-exec rm -rf {} +
 	find . -name '*~' \
-		-exec rm --force {} +
+		-exec rm -rf {} +
 
 clean-build:
-	rm --force --recursive build/
-	rm --force --recursive dist/
-	rm --force --recursive UIP.egg-info/
-	rm --force --recursive .cache/
-	rm --force .coverage
+	rm -rf build/
+	rm -rf dist/
+	rm -rf UIP.egg-info/
+	rm -rf .cache/
+	rm -f .coverage
 
 clean: clean-pyc clean-build
 
@@ -25,9 +25,11 @@ install: clean-pyc
 uninstall: clean-pyc
 	$(PIP) uninstall $(MODULE_NAME)
 
+test-install: clean
+	$(PIP) install --requirement $(TEST_REQUIREMENTS)
+
 test:
-	pytest --cov --verbose --color=yes $(TEST_PATH)
-	rm .coverage
+	pytest
 
 lint:
 	coala --non-interactive
