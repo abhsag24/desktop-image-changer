@@ -2,6 +2,7 @@ import unittest
 import tempfile
 import os
 from uiplib import scrape
+from bs4 import BeautifulSoup
 
 class ScrapeTest(unittest.TestCase):
 
@@ -35,4 +36,20 @@ class ScrapeTest(unittest.TestCase):
                                 }]}}}]}}
         self.assertEqual(scrape.get_reddit_image_links('url', 1),
                          [('some_url.png', 'url.com/some_url.png?21')])
+
+    def test_unsplash_image_links(self):
+
+        html = ('<html><head></head><body><div class="y5w1y">'
+                '<div class="hduMF"><div class="_31wG7 _3YIV2">'
+                'Some text</div><div class="_114MZ"> Some text'
+                '</div><div class="_287Ma tPMQE"><a href="url.com'
+                '/photos/some_url/download?force=true"></a></div>'
+                '</div></div></body></html>')
+
+        scrape.make_soup = lambda x : BeautifulSoup(html, "html.parser")
+
+        self.assertEqual(scrape.get_unsplash_image_links('url', 1),
+                         [('some_url.jpg',
+                           'url.com/photos/some_url/download?force=true')])
+
 
