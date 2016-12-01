@@ -26,7 +26,11 @@ if not os.path.isfile(settings_file_path):
                  'no-of-images': NUMBER_OF_IMAGES_TO_PARSE,
                  'pics-folder' : DEFAULT_PICS_FOLDER,
                  'website' : ['https://unsplash.com/new',
-                              'https://www.reddit.com/r/wallpapers/']}
+                              'https://www.reddit.com/r/wallpapers/',
+                              'https://www.reddit.com/r/wallpaper/',
+                              'https://www.reddit.com/r/EarthPorn/',
+                              'https://www.reddit.com/r/VillagePorn/',
+                              'https://www.reddit.com/r/pics/']}
     with open(settings_file_path,"w") as settings_file:
         settings_file.write(json.dumps(file_data))
 
