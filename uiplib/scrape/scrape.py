@@ -7,7 +7,6 @@ import os
 import sys
 import json
 
-
 def make_soup(url):  # pragma: no cover
     """Make soup, that is basically parsing the html document."""
     response = requests.get(
@@ -51,8 +50,8 @@ def get_unsplash_image_links(url, no_of_images):
     a_tags = soup.select('.y5w1y .hduMF .tPMQE a')
     image_links = []
     if not a_tags:
-        print('No matching image found')
-        return
+        print ('No matching image found')
+        return []
 
     for a_tag in a_tags:
         image_url = a_tag['href']
@@ -144,8 +143,10 @@ def download_store_images(full_path, image_link):  # pragma no-cover
         urlretrieve(image_link,
                     full_path,
                     reporthook=dlProgress)
+        return True
     except Exception as e:
         print("Image cannot be downloaded: ", str(e))
+        return False
 
 
 def get_images(url, directory, count):
