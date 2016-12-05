@@ -38,8 +38,7 @@ Just run commands without sudo
 
 Run these commands before running the above command:
 ```
-sudo apt-get install -y python3-dev python3-setuptools python3-gi python3-gi-cairo libglib2.0-dev libffi-dev libgirepository1.0 libcairo2-dev python3-cairo-dev
-sudo easy_install3 pip
+sudo apt-get install -y python3-gi python3-gi-cairo libglib2.0-dev libffi-dev libgirepository1.0 libcairo2-dev python3-cairo-dev
 sudo pip3.5 install https://download.gnome.org/sources/pygobject/3.22/pygobject-3.22.0.tar.xz
 ```
 
