@@ -27,11 +27,21 @@ To install the requirements first run the command
 ```
 sudo python3 setup.py install
 ```
+>Note: We only support Python 3.5
 
 >Note: there is no sudo for windows as well as when you have root privelages.
 Just run commands without sudo
 
 >Note: some setups use python instead of python3 and pip3 instead of pip
+
+### For Debian based Linux systems:
+
+Run these commands before running the above command:
+```
+sudo apt-get install -y python3-dev python3-setuptools python3-gi python3-gi-cairo libglib2.0-dev libffi-dev libgirepository1.0 libcairo2-dev python3-cairo-dev
+sudo easy_install3 pip
+sudo pip3.5 install https://download.gnome.org/sources/pygobject/3.22/pygobject-3.22.0.tar.xz
+```
 
 Run
 ===
