@@ -17,9 +17,13 @@ def get_contents(filename):
 #Make Home Directory
 if not os.path.exists(HOME_DIR):
     os.makedirs(HOME_DIR)
+    if sys.platform.startswith('linux'):
+      os.chmod(HOME_DIR,0o777)
 
 if not os.path.exists(DEFAULT_PICS_FOLDER):
     os.makedirs(DEFAULT_PICS_FOLDER)
+    if sys.platform.startswith('linux'):
+      os.chmod(DEFAULT_PICS_FOLDER,0o777)
 
 if not os.path.isfile(settings_file_path):
     file_data = {'timeout' : 30*60,

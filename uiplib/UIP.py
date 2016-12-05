@@ -47,6 +47,8 @@ def main():
             try:
                 shutil.rmtree(settings['pics-folder'])
                 os.mkdir(settings['pics-folder'])
+                if sys.platform.startswith('linux'):
+                    os.chmod(settings['pics-folder'],0o777)
             except FileNotFoundError:
                 pass
         if not settings['offline']:
