@@ -1,8 +1,8 @@
 import sys, os, shutil
-from uiplib.settings import ParseSettings
+from uiplib.settings import ParseSettings,HOME_DIR
 from uiplib.scheduler import scheduler
-from uiplib.settings import HOME_DIR
 from uiplib.GUI import MainWindow
+from uiplib.utils import make_dir
 from daemoniker import Daemonizer, send, SIGTERM
 
 def main():
@@ -47,9 +47,7 @@ def main():
             print("Deleting all downloaded wallpapers...")
             try:
                 shutil.rmtree(settings['pics-folder'])
-                os.mkdir(settings['pics-folder'])
-                if sys.platform.startswith('linux'):
-                    os.chmod(settings['pics-folder'],0o777)
+                make_dir(settings['pics-folder'])
             except FileNotFoundError:
                 pass
         if not settings['offline']:

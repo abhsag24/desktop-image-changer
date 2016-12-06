@@ -2,7 +2,7 @@ import sys
 import os
 import json
 
-from uiplib.utils import check_version
+from uiplib.utils import check_version,make_dir
 check_version()
 #Proceed only if the version is greater else exits
 
@@ -21,14 +21,10 @@ def get_contents(filename):
 
 #Make Home Directory
 if not os.path.exists(HOME_DIR):
-    os.makedirs(HOME_DIR)
-    if sys.platform.startswith('linux'):
-      os.chmod(HOME_DIR,0o777)
+    make_dir(HOME_DIR)
 
 if not os.path.exists(DEFAULT_PICS_FOLDER):
-    os.makedirs(DEFAULT_PICS_FOLDER)
-    if sys.platform.startswith('linux'):
-      os.chmod(DEFAULT_PICS_FOLDER,0o777)
+    make_dir(DEFAULT_PICS_FOLDER)
 
 if not os.path.isfile(settings_file_path):
     file_data = {'timeout' : 30*60,
