@@ -1,1 +1,1 @@
-pygobject~=3.22.0
+pygobject~=3.20.0
