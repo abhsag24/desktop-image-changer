@@ -1,11 +1,16 @@
+import sys
+import os
+import json
+
+from uiplib.utils import check_version
+check_version()
+#Proceed only if the version is greater else exits
+
 from setuptools import setup
 from uiplib.settings import (HOME_DIR,
                              DEFAULT_PICS_FOLDER,
                              NUMBER_OF_IMAGES_TO_PARSE,
                              settings_file_path)
-import sys
-import os
-import json
 
 def get_contents(filename):
     file = open(filename, 'r').readlines()
