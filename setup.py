@@ -42,8 +42,6 @@ requirements = []
 requirements += get_contents('requirements.txt')
 if sys.platform.startswith('darwin'):
     requirements += get_contents('mac-requirements.txt')
-elif sys.platform.startswith('linux'):
-    requirements += get_contents('linux-requirements.txt')
 
 setup(
     #Name of application:
