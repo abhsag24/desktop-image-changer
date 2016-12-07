@@ -54,11 +54,7 @@ def main():
         if not settings['offline']:
             print("UIP will now connect to internet and download images"
                   " from reddit and unsplash.")
-        scheduler(settings['offline'],
-                  settings['pics-folder'],
-                  settings['timeout'],
-                  settings['website'],
-                  settings['no-of-images'])
+        scheduler(settings)
     except KeyboardInterrupt:
         print("Exiting UIP hope you had a nice time :)")
         sys.exit(0)

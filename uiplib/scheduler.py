@@ -18,11 +18,13 @@ except ImportError:
 
 class scheduler():
 
-    def __init__(self, offline, pics_folder, timout, website, count):
-        self.website = website
-        self.timeout = timout
-        self.directory = pics_folder
-        self.count = count
+    def __init__(self, settings):
+        self.settings = settings
+        self.offline = settings['offline']
+        self.website = settings['website']
+        self.timeout = settings['timeout']
+        self.directory = settings['pics-folder']
+        self.count = settings['no-of-images']
 
         if not offline:
             try:
