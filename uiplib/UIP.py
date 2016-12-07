@@ -1,7 +1,6 @@
 import sys, os, shutil
 from uiplib.settings import ParseSettings,HOME_DIR
 from uiplib.scheduler import scheduler
-from uiplib.GUI import MainWindow
 from uiplib.utils import make_dir
 from daemoniker import Daemonizer, send, SIGTERM
 
@@ -54,6 +53,7 @@ def main():
             print("UIP will now connect to internet and download images"
                   " from reddit and unsplash.")
         if settings['ui']:
+            from uiplib.GUI import MainWindow
             app = MainWindow(settings)
             app.run()
             sys.exit(0)
