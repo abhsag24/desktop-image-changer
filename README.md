@@ -1,7 +1,7 @@
 UIP Is Pretty
 =============
 
-UIP Scrapes wallpapers from reddit and applies them on your desktop according to a schedule. Works with windows, mac and gtk based desktops on Linux.
+UIP scrapes images from reddit and unsplash, and applies them as a wallpaper on your desktop(with configurable schedule). Works with Windows, Mac and Gtk based desktops on Linux.
 
 Examples of UIP wallpapers
 ==========================
@@ -34,6 +34,10 @@ Just run commands without sudo
 
 >Note: some setups use python instead of python3 and pip3 instead of pip
 
+>Note: For some OS' you might need to install Imagetk(needed in our GUI) seperately
+for eg: in Ubuntu you can install it by:
+`sudo apt-get install python3-pil.imagetk`
+
 Run
 ===
 
@@ -43,6 +47,12 @@ To run just type
 UIP
 ```
 from anywhere inside the terminal/console.
+
+If you want to try out our experimental GUI feature:
+use: `UIP --ui`
+
+To install requirements for experimental GUI, run:
+`pip install -r gui-requirements.txt`
 
 For help use `UIP --help`
 
