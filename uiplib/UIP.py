@@ -1,7 +1,7 @@
 import sys
 import os
 import shutil
-from uiplib.settings import ParseSettings
+from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
 from uiplib.utils import make_dir
 from daemoniker import Daemonizer, send, SIGTERM
