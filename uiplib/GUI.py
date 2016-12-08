@@ -6,7 +6,9 @@ from PIL import Image, ImageTk
 from queue import Queue
 import os
 
+
 class Gallery(Frame):
+
     def __init__(self, master):
         Frame.__init__(self, master)
         self.image = None
@@ -17,11 +19,10 @@ class Gallery(Frame):
         self.image = None
         self.cv = None
         self.label = Label(self, wraplength=150,
-                                justify=CENTER,
-                                text="No images found. "
-                                    "Please refresh and try again!")
+                           justify=CENTER,
+                           text="No images found. "
+                           "Please refresh and try again!")
         self.label.pack(padx=50, pady=50)
-
 
     def set_image(self, imagePath):
         self.label = None
@@ -32,12 +33,14 @@ class Gallery(Frame):
             self.cv.pack(fill=BOTH, expand=YES)
         self.image = Image.open(imagePath)
         self.image = self.image.resize((width*2, height*2),
-                                        Image.ANTIALIAS)
+                                       Image.ANTIALIAS)
         self.tk_image = ImageTk.PhotoImage(self.image)
         self.cv.create_image(0, 0, image=self.tk_image)
 
+
 class MainWindow:
     ''' The main window that houses the app '''
+
     def __init__(self, settings):
         # configuration
         self.settings = settings
@@ -63,9 +66,9 @@ class MainWindow:
         self.mainFrame = Frame(self.container)
         self.footerFrame = Frame(self.container)
 
-        self.headerFrame.grid(row=0,column=0, sticky=W+E+N)
-        self.mainFrame.grid(row=1,column=0, sticky=N+E+W+S)
-        self.footerFrame.grid(row=2,column=0, sticky=S+W+E)
+        self.headerFrame.grid(row=0, column=0, sticky=W+E+N)
+        self.mainFrame.grid(row=1, column=0, sticky=N+E+W+S)
+        self.footerFrame.grid(row=2, column=0, sticky=S+W+E)
 
         self.nextButton = Button(self.mainFrame,
                                  text=">",
@@ -83,8 +86,8 @@ class MainWindow:
                                       text="Set Wallpaper",
                                       command=self.set_wallpaper)
         self.flushBtn = Button(self.footerFrame,
-                                 text="Flush",
-                                 command=self.flush)
+                               text="Flush",
+                               command=self.flush)
         self.setWallpaperBtn.pack(padx=5, pady=5)
         self.downloadBtn.pack(padx=5, pady=5)
         self.flushBtn.pack(padx=5, pady=5)
@@ -100,28 +103,24 @@ class MainWindow:
         else:
             self.gallery.show_error()
 
-
     def show_progess(self, show):
         if show:
             self.progressBar = Progressbar(self.headerFrame,
-                                        orient = HORIZONTAL,
-                                        length = '300',
-                                        variable = self.progress,
-                                        mode='determinate')
+                                           orient=HORIZONTAL,
+                                           length='300',
+                                           variable=self.progress,
+                                           mode='determinate')
             self.progressBar.pack(fill=BOTH, padx=5, pady=5)
         else:
             self.progressBar = None
 
-
     def push(self, x):
         self.queue.push(x)
-
 
     def run(self):
         self.update_ui()
         # run the main event loop of UI
         self.root.mainloop()
-
 
     def update_ui(self):
         # update UI with data received
@@ -134,11 +133,9 @@ class MainWindow:
         self.index = (self.index + 1) % len(self.images)
         self.gallery.set_image(self.images[self.index])
 
-
     def prev_wallpaper(self):
         self.index -= 1
         self.gallery.set_image(self.images[self.index])
-
 
     def set_wallpaper(self):
         image = self.images[self.index]

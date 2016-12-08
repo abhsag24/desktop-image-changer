@@ -1,8 +1,11 @@
-import sys, os, shutil
-from uiplib.settings import ParseSettings,HOME_DIR
+import sys
+import os
+import shutil
+from uiplib.settings import ParseSettings
 from uiplib.scheduler import scheduler
 from uiplib.utils import make_dir
 from daemoniker import Daemonizer, send, SIGTERM
+
 
 def main():
     settingsParser = ParseSettings()
@@ -29,7 +32,6 @@ def main():
                 sys.exit(0)
         else:
             print('Wrong option for service flag see --help')
-
 
     print("Hey this is UIP! you can use it to download"
           " images from reddit and also to schedule the setting of these"

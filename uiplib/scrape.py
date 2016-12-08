@@ -5,19 +5,21 @@ import os
 import sys
 import json
 
+
 def make_soup(url):
     '''
     makes soup, that is basically parsing the html document
     '''
-    response = requests.get(url, headers = {'User-agent': 'UIP'})
+    response = requests.get(url, headers={'User-agent': 'UIP'})
     html = response.content
     return BeautifulSoup(html, "html.parser")
+
 
 def make_json(url):
     """
     makes a dictionary out of a json file. If API like: URL/.json
     """
-    response = requests.get(url + '/.json', headers = {'User-agent': 'UIP'})
+    response = requests.get(url + '/.json', headers={'User-agent': 'UIP'})
     json_file = response.text
     data = json.loads(json_file)
     return data
@@ -31,6 +33,7 @@ def dlProgress(count, blockSize, totalSize):
     sys.stdout.write("\r[%s%s]" % ('='*int(percent), ' '*(50-int(percent))))
     sys.stdout.flush()
 
+
 def get_unsplash_image_links(url, no_of_images):
     """
     returns a list of tuples,with first index as filename and ther index
@@ -42,7 +45,7 @@ def get_unsplash_image_links(url, no_of_images):
     a_tags = soup.select('.y5w1y .hduMF .tPMQE a')
     image_links = []
     if not a_tags:
-        print ('No matching image found')
+        print('No matching image found')
         return
 
     for a_tag in a_tags:
@@ -53,6 +56,7 @@ def get_unsplash_image_links(url, no_of_images):
             break
 
     return image_links
+
 
 def get_reddit_image_links(url, no_of_images):
     """
@@ -77,7 +81,7 @@ def get_reddit_image_links(url, no_of_images):
             pass
 
         for image in images:
-            if(len(image_links)<no_of_images):
+            if(len(image_links) < no_of_images):
                 image_url = image['source']['url']
                 filename = image_url.split('/')[-1]
                 filename = filename[: filename.find('?')]
@@ -85,16 +89,17 @@ def get_reddit_image_links(url, no_of_images):
 
     return image_links
 
+
 def get_image_links(url, count):
     '''
     Returns
     '''
     image_links = []
 
-    if 'unsplash' in url:       #For Unsplash
+    if 'unsplash' in url:  # For Unsplash
         image_links.extend(get_unsplash_image_links(url, count))
 
-    elif 'reddit' in url:     #For Reddit
+    elif 'reddit' in url:  # For Reddit
         image_links.extend(get_reddit_image_links(url, count))
 
     return image_links
@@ -104,9 +109,9 @@ def download_store_images(full_path, image_link):
     try:
         urlretrieve(image_link,
                     full_path,
-                    reporthook = dlProgress)
+                    reporthook=dlProgress)
     except Exception as e:
-        print("Image cannot be downloaded: ",str(e))
+        print("Image cannot be downloaded: ", str(e))
 
 
 def get_images(url, directory, count):

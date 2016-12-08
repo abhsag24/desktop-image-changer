@@ -12,7 +12,7 @@ import random
 try:
     import msvcrt
 except ImportError:
-    #not on windows
+    # not on windows
     pass
 
 
@@ -27,16 +27,15 @@ class scheduler():
         if not offline:
             try:
                 thread_nos = len(self.website)
-                for i in range(thread_nos) :
-                    #Init the thread
+                for i in range(thread_nos):
+                    # Init the thread
                     fetch_thread = onlineFetch(self.website[i],
-                                                self.directory, self.count )
-                    #die upon main thread exit
+                                               self.directory, self.count)
+                    # die upon main thread exit
                     fetch_thread.setDaemon(True)
 
                     # Start new Threads
                     fetch_thread.start()
-
 
             except ValueError as e:
                 print("File could not be retrieved.", e)
@@ -69,7 +68,7 @@ class scheduler():
         if os.name == 'nt':
             return msvcrt.kbhit()
         else:
-            dr,dw,de = select([sys.stdin], [], [], 0)
+            dr, dw, de = select([sys.stdin], [], [], 0)
             return dr != []
 
     def getch(self):
@@ -96,11 +95,10 @@ class scheduler():
                 self.change_random()
                 self.time = time.time()
             unew, snew, cnew, c, e = os.times()
-            start=time.time()
+            start = time.time()
             percentage = get_percentage(unew, uold, start)
             if percentage > 30.0:
                 time.sleep(0.1)
-
 
     def setStartTime(self, time):
         self.time = time
