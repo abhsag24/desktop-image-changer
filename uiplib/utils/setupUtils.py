@@ -21,7 +21,7 @@ def check_version():
     # Required version of python interpreter
     req_version = (3, 5)
     # Current version of python interpreter
-    curr_version = sys.version_info
+    curr_version = get_current_version()
 
     # Exit if minimum requirements are not met
     if curr_version < req_version:

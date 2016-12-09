@@ -12,7 +12,9 @@ def get_percentage(unew, uold, start):
     del_time = (time.time()-float(start))
     if del_time != 0:
         return 100 * ((float(unew) - float(uold)) / del_time)
-    return 100
+    return 100  # pragma: no cover
+    # This is highly unlikely for time.time() - time.time() to be 0
+    # atleast as close to 0.0001 difference exists
 
 
 def update_settings(new_settings):  # pragma: no cover
