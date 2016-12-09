@@ -3,7 +3,7 @@ import os
 import shutil
 from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
-from uiplib.utils import make_dir
+from uiplib.utils import make_dir, exit_UIP
 from daemoniker import Daemonizer, send, SIGTERM
 
 
@@ -21,15 +21,10 @@ def main():
                 except SystemExit:
                     print("UIP service already, running "
                           "Close previous app by running UIP --service stop")
+                    sys.exit(0)
 
         elif 'stop' == str(settings['service']):
-            try:
-                send(pid_file, SIGTERM)
-                os.remove(pid_file)
-                sys.exit(0)
-            except Exception as e:
-                print("you need to start a service first", str(e))
-                sys.exit(0)
+            exit_UIP()
         else:
             print('Wrong option for service flag see --help')
 
@@ -41,7 +36,7 @@ def main():
         if settings['error']:
             print("\nWRONG USAGE OF FLAGS --no-of-images AND --offline")
             settingsParser.show_help()
-            sys.exit(0)
+            exit_UIP()
         if settings['offline']:
             print("You have choosen to run UIP in offline mode.")
         if settings['flush']:
@@ -58,12 +53,11 @@ def main():
             from uiplib.GUI import MainWindow
             app = MainWindow(settings)
             app.run()
-            sys.exit(0)
+            exit_UIP()
         scheduler(settings['offline'],
                   settings['pics-folder'],
                   settings['timeout'],
                   settings['website'],
                   settings['no-of-images'])
     except KeyboardInterrupt:
-        print("Exiting UIP hope you had a nice time :)")
-        sys.exit(0)
+        exit_UIP()
