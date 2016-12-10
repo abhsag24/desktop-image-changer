@@ -36,7 +36,8 @@ if not os.path.isfile(settings_file_path):
                              'https://www.reddit.com/r/wallpaper/',
                              'https://www.reddit.com/r/EarthPorn/',
                              'https://www.reddit.com/r/VillagePorn/',
-                             'https://www.reddit.com/r/pics/']}
+                             'https://www.reddit.com/r/pics/',
+                             'https://api.desktoppr.co/1/wallpapers', ]}
     with open(settings_file_path, "w") as settings_file:
         settings_file.write(json.dumps(file_data))
 

@@ -85,9 +85,10 @@ class MainWindow:
         # Add sites.
         self.unsplash = BooleanVar()
         self.reddit = BooleanVar()
+        self.desktoppr = BooleanVar()
         sites_label = Label(mainFrame, text="Where to download from:")
         sites_label.grid(row=1, padx=10, pady=1, sticky=W)
-        sites = ('unsplash', 'reddit')
+        sites = ('unsplash', 'reddit', 'desktoppr')
         unsplash_radio = Checkbutton(mainFrame,
                                      text="Unsplash",
                                      var=self.unsplash)
@@ -96,30 +97,34 @@ class MainWindow:
                                    var=self.reddit,
                                    command=lambda: (
                                        self.enable_subreddit(mainFrame)))
+        desktoppr_radio = Checkbutton(mainFrame,
+                                      text="Desktoppr",
+                                      var=self.desktoppr)
         unsplash_radio.grid(row=1, column=1, padx=10, pady=10, sticky=W)
         reddit_radio.grid(row=2, column=1, padx=10, pady=10, sticky=W)
+        desktoppr_radio.grid(row=3, column=1, padx=10, pady=10, sticky=W)
 
         # Timout
         self.timeout_val = StringVar()
         timeout_label = Label(mainFrame, text="Change Wallpaper in:")
         timeout = Entry(mainFrame, textvariable=self.timeout_val)
-        timeout_label.grid(row=3, padx=10, pady=10, sticky=W)
-        timeout.grid(row=3, column=1, sticky=W)
+        timeout_label.grid(row=4, padx=10, pady=10, sticky=W)
+        timeout.grid(row=4, column=1, sticky=W)
         minute_label = Label(mainFrame, text="minutes")
-        minute_label.grid(row=3, column=2, padx=10, pady=10, sticky=W)
+        minute_label.grid(row=4, column=2, padx=10, pady=10, sticky=W)
 
         # Number of images per site
         self.count_val = StringVar()
         count_label = Label(mainFrame, text="No. images per site:")
         count = Entry(mainFrame, textvariable=self.count_val)
-        count_label.grid(row=4, padx=10, pady=10, sticky=W)
-        count.grid(row=4, column=1, sticky=W)
+        count_label.grid(row=5, padx=10, pady=10, sticky=W)
+        count.grid(row=5, column=1, sticky=W)
 
         # Apply
         apply_button = Button(mainFrame,
                               text="Apply",
                               command=self.handle_settings)
-        apply_button.grid(row=5, column=1, pady=20, sticky=W)
+        apply_button.grid(row=6, column=1, pady=20, sticky=W)
 
     def create_general_tab(self):
         general_width = 1000
@@ -240,6 +245,8 @@ class MainWindow:
         if self.reddit.get():
             reddit_sites = self.retrieve_textbox_input(self.sub_entry).split()
             sites.extend(reddit_sites)
+        if self.desktoppr.get():
+            sites.append("https://api.desktoppr.co/1/wallpapers")
         self.new_settings['website'] = sites
         try:
             self.new_settings['timeout'] = int(self.timeout_val.get())*60

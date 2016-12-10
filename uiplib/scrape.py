@@ -17,9 +17,9 @@ def make_soup(url):
 
 def make_json(url):
     """
-    makes a dictionary out of a json file. If API like: URL/.json
+    makes a dictionary out of a json file.
     """
-    response = requests.get(url + '/.json', headers={'User-agent': 'UIP'})
+    response = requests.get(url, headers={'User-agent': 'UIP'})
     json_file = response.text
     data = json.loads(json_file)
     return data
@@ -63,7 +63,8 @@ def get_reddit_image_links(url, no_of_images):
     returns a list of tuples,with first index as filename and ther index
     as link of the image scraped from reddit.
     """
-    page = make_json(url)
+    # reddit requires .json format for the URL
+    page = make_json(url+'/.json')
     image_links = []
     children = []
     try:
@@ -90,6 +91,30 @@ def get_reddit_image_links(url, no_of_images):
     return image_links
 
 
+def get_desktoppr_image_links(url, no_of_images):
+    """
+    returns a list of tuples, (filename, image_url)
+    """
+    responses = []
+    image_links = []
+    index = 1
+
+    while len(responses) < no_of_images:
+        page_url = url + ('?page=%d' % index)
+        data = make_json(page_url)
+        responses.extend(data['response'])
+        index += 1
+
+    responses = responses[:no_of_images]
+
+    for result in responses:
+        image_url = result['image']['url']
+        filename = image_url.split('/')[-1]
+        image_links.append((filename, image_url))
+
+    return image_links
+
+
 def get_image_links(url, count):
     '''
     Returns
@@ -101,6 +126,9 @@ def get_image_links(url, count):
 
     elif 'reddit' in url:  # For Reddit
         image_links.extend(get_reddit_image_links(url, count))
+
+    elif 'desktoppr' in url:  # For Desktoppr
+        image_links.extend(get_desktoppr_image_links(url, count))
 
     return image_links
 
