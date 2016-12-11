@@ -2,8 +2,8 @@ pics/*
 *.pyc
 *.orig
 MANIFEST
-dist/
-build/
 UIP.egg-info/
 README
 .cache/
+build/
+dist/
