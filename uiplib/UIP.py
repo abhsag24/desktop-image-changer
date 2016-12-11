@@ -4,6 +4,7 @@ import shutil
 from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
 from uiplib.utils import make_dir, exit_UIP
+from setup import makeHomeDirs
 from daemoniker import Daemonizer, send, SIGTERM
 
 
@@ -61,3 +62,7 @@ def main():
                   settings['no-of-images'])
     except KeyboardInterrupt:
         exit_UIP()
+
+if __name__ == '__main__':
+	makeHomeDirs()
+	main()

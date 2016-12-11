@@ -5,3 +5,5 @@ MANIFEST
 UIP.egg-info/
 README
 .cache/
+build/
+dist/

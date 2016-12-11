@@ -1,7 +1,0 @@
-('/usr/local/lib/python3.5/dist-packages/pycparser-2.17-py3.5.egg',
- None,
- {'*.pyo', '*.pyc', '*.pyd', 'EGG-INFO', '*.so', '*.py'},
- 'DATA',
- [('pycparser/_c_ast.cfg',
-   '/usr/local/lib/python3.5/dist-packages/pycparser-2.17-py3.5.egg/pycparser/_c_ast.cfg',
-   'DATA')])
