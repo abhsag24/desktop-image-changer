@@ -13,6 +13,19 @@ from uiplib.settings import (HOME_DIR,
                              settings_file_path)
 
 
+def get_packages():
+    base_dir = 'uiplib'
+    packages = [base_dir]
+    for (path, dirs, files) in os.walk(base_dir):
+        try:
+            dirs.remove('__pycache__')
+        except ValueError:
+            pass
+        if '__init__.py' in files:
+            packages.extend([os.path.join(path, dir) for dir in dirs])
+    return packages
+
+
 def get_contents(filename):
     file = open(filename, 'r').readlines()
     out = []
@@ -57,7 +70,7 @@ setup(
     author_email="uip.developers@gmail.com",
 
     # packages:
-    packages=["uiplib"],
+    packages=get_packages(),
 
     license="LICENSE",
 
