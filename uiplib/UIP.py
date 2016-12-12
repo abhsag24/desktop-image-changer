@@ -11,6 +11,10 @@ def main():
     settingsParser = ParseSettings()
     settings = settingsParser.settings
     pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
+    if settings['error']:
+        print("\nWRONG USAGE OF FLAGS, see --help")
+        settingsParser.show_help()
+        exit_UIP()
     if settings['service']:
         if 'start' == str(settings['service']):
             with Daemonizer() as (is_setup, daemonizer):
@@ -33,10 +37,6 @@ def main():
           " images as your desktop wallpaper."
           " \nPress ctrl-c to exit")
     try:
-        if settings['error']:
-            print("\nWRONG USAGE OF FLAGS --no-of-images AND --offline")
-            settingsParser.show_help()
-            exit_UIP()
         if settings['offline']:
             print("You have choosen to run UIP in offline mode.")
         if settings['flush']:

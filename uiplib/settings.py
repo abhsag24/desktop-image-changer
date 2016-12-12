@@ -39,14 +39,16 @@ class ParseSettings:
                                  "combined with --offline flag.")
         self.parser.add_argument("--ui", action="store_true",
                                  help="Start the app in Graphical "
-                                 "Interface mode.")
+                                 "Interface mode. This should not be"
+                                 "combined with --service flag.")
         args = self.parser.parse_args()
 
         settings = {
             'service': args.service,
             'offline': args.offline,
             'flush': args.flush,
-            'error': args.no_of_images and args.offline,
+            'error': (args.no_of_images and args.offline) or
+                     (args.ui and args.service),
             'ui': args.ui,
         }
         if args.no_of_images:
