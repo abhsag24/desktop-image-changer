@@ -96,7 +96,7 @@ class MainWindow:
                                    text="Reddit",
                                    var=self.reddit,
                                    command=lambda: (
-                                       self.enable_subreddit(mainFrame)))
+                                       self.toggle_subreddit(mainFrame)))
         desktoppr_radio = Checkbutton(mainFrame,
                                       text="Desktoppr",
                                       var=self.desktoppr)
@@ -211,11 +211,23 @@ class MainWindow:
         image = self.images[self.index]
         change_background(image)
 
-    def enable_subreddit(self, mainFrame):
-        sub_label = Label(mainFrame, text="Enter Subreddits")
-        sub_label.grid(row=1, column=2, padx=0, pady=0)
-        self.sub_entry = Text(mainFrame, height=10, width=20)
-        self.sub_entry.grid(row=2, column=2, padx=10, pady=10, sticky=W)
+    def toggle_subreddit(self, mainFrame):
+        if self.reddit.get() == True:
+            try:
+                self.sub_label.grid()
+                self.sub_entry.grid()
+            except AttributeError:
+                self.sub_label = Label(mainFrame, text="Enter Subreddits")
+                self.sub_entry = Text(mainFrame, height=10, width=20)
+                self.sub_label.grid(row=1, column=2, padx=0, pady=0)
+                self.sub_entry.grid(row=2,
+                                    column=2,
+                                    padx=10,
+                                    pady=10,
+                                    sticky=W)
+        else:
+            self.sub_label.grid_remove()
+            self.sub_entry.grid_remove()
 
     def download(self):
         pass
