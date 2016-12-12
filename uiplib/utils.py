@@ -3,7 +3,6 @@ import sys
 import time
 import json
 from uiplib.settings import HOME_DIR
-from daemoniker import send, SIGTERM
 
 
 def get_percentage(unew, uold, start):
@@ -17,15 +16,6 @@ def make_dir(dirpath):
     os.makedirs(dirpath)
     if sys.platform.startswith('linux'):
         os.chmod(dirpath, 0o777)
-
-
-def exit_UIP():
-    pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
-    if os.path.exists(pid_file):
-        send(pid_file, SIGTERM)
-        os.remove(pid_file)
-    print("\nExiting UIP hope you had a nice time :)")
-    sys.exit(0)
 
 
 def update_settings(new_settings):
