@@ -58,7 +58,8 @@ def main():
                   settings['pics-folder'],
                   settings['timeout'],
                   settings['website'],
-                  settings['no-of-images'])
+                  settings['no-of-images'],
+                  settings['service'])
     except KeyboardInterrupt:
         exit_UIP()
 

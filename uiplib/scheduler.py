@@ -19,11 +19,12 @@ except ImportError:
 
 class scheduler():
 
-    def __init__(self, offline, pics_folder, timout, website, count):
+    def __init__(self, offline, pics_folder, timeout, website, count, service):
         self.website = website
-        self.timeout = timout
+        self.timeout = timeout
         self.directory = pics_folder
         self.count = count
+        self.service = service
 
         if not offline:
             try:
@@ -66,6 +67,8 @@ class scheduler():
     def kbhit(self):
         ''' Returns True if keyboard character was hit, False otherwise.
         '''
+        if self.service:
+            return False
         if os.name == 'nt':
             return msvcrt.kbhit()
         else:
