@@ -1,9 +1,10 @@
 from uiplib.setWallpaper import change_background
-from uiplib.utils import get_percentage, onlineFetch
+from uiplib.utils import get_percentage
+from uiplib.scrape.onlineFetch import onlineFetch
 
 import os
 import time
-from uiplib.scrape import get_images
+from uiplib.scrape.scrape import get_images
 from threading import Thread
 import sys
 from select import select

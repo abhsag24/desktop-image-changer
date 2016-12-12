@@ -1,7 +1,7 @@
 import unittest
 import tempfile
 import os
-from uiplib import scrape
+from uiplib.scrape import scrape
 from bs4 import BeautifulSoup
 
 

@@ -2,8 +2,6 @@ import os
 import sys
 import time
 import json
-from uiplib.scrape import get_images
-from threading import Thread
 from uiplib.settings import HOME_DIR
 from daemoniker import send, SIGTERM
 
@@ -37,21 +35,6 @@ def update_settings(new_settings):
         _file.write(json.dumps(new_settings, indent=4, sort_keys=True))
     os.remove(settings_file)
     os.rename(temp_file, settings_file)
-
-
-# Class to create threads for get_images
-
-
-class onlineFetch(Thread):
-
-    def __init__(self, url, directory, count):
-        Thread.__init__(self)
-        self.url = url
-        self.directory = directory
-        self.count = count
-
-    def run(self):
-        get_images(self.url, self.directory, self.count)
 
 
 def check_version():
