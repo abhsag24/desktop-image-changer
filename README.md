@@ -76,7 +76,7 @@ python setup.py install
 ```
 How to run?
 ```
-UIP.py
+UIP
 ```
 
 HOW TO CONTRIBUTE
