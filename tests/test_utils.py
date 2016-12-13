@@ -2,7 +2,7 @@ import os
 import sys
 import shutil
 import unittest
-from uiplib.utils import make_dir
+from uiplib.utils.setupUtils import make_dir
 
 
 class UtilsTest(unittest.TestCase):

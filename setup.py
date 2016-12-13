@@ -2,7 +2,7 @@ import sys
 import os
 import json
 
-from uiplib.utils import check_version, make_dir
+from uiplib.utils.setupUtils import check_version, make_dir
 check_version()
 # Proceed only if the version is greater else exits
 

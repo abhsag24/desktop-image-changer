@@ -1,5 +1,5 @@
 from uiplib.setWallpaper import change_background
-from uiplib.utils import get_percentage
+from uiplib.utils.utils import get_percentage
 from uiplib.scrape.onlineFetch import onlineFetch
 
 import os

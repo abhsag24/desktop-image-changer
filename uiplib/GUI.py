@@ -1,6 +1,6 @@
 from uiplib.scheduler import scheduler
 from uiplib.setWallpaper import change_background
-from uiplib.utils import update_settings
+from uiplib.utils.utils import update_settings
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
