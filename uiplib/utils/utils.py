@@ -1,3 +1,5 @@
+"""UIP Main utility module."""
+
 import os
 import sys
 import time
@@ -6,13 +8,15 @@ from uiplib.settings import HOME_DIR
 
 
 def get_percentage(unew, uold, start):
+    """Return the percentage of download progress."""
     del_time = (time.time()-float(start))
     if del_time != 0:
         return 100 * ((float(unew) - float(uold)) / del_time)
     return 100
 
 
-def update_settings(new_settings):
+def update_settings(new_settings):  # pragma: no cover
+    """Update the settings file with the new settings."""
     settings_file = os.path.join(HOME_DIR, 'settings.json')
     temp_file = os.path.join(HOME_DIR, 'temp.json')
     with open(temp_file, "w+") as _file:
@@ -22,6 +26,7 @@ def update_settings(new_settings):
 
 
 def check_sites(settings):
+    """Check the presence of sites and update settings as necessary."""
     sites_present = {
         'unsplash': False,
         'reddit': [],

@@ -1,3 +1,5 @@
+"""Module that scrapes the wallpapers."""
+
 from bs4 import BeautifulSoup
 import requests
 from urllib.request import urlretrieve
@@ -6,19 +8,15 @@ import sys
 import json
 
 
-def make_soup(url):
-    '''
-    makes soup, that is basically parsing the html document
-    '''
+def make_soup(url):  # pragma: no cover
+    """Make soup, that is basically parsing the html document."""
     response = requests.get(url, headers={'User-agent': 'UIP'})
     html = response.content
     return BeautifulSoup(html, "html.parser")
 
 
-def make_json(url):
-    """
-    makes a dictionary out of a json file.
-    """
+def make_json(url):  # pragma: no cover
+    """Make a dictionary out of a json file."""
     response = requests.get(url, headers={'User-agent': 'UIP'})
     json_file = response.text
     data = json.loads(json_file)
@@ -26,18 +24,16 @@ def make_json(url):
 
 
 def dlProgress(count, blockSize, totalSize):
-    '''
-    Show Progress bar
-    '''
+    """Show Progress bar."""
     percent = int(count*blockSize*100/totalSize)/2
     sys.stdout.write("\r[%s%s]" % ('='*int(percent), ' '*(50-int(percent))))
     sys.stdout.flush()
 
 
 def get_unsplash_image_links(url, no_of_images):
-    """
-    returns a list of tuples,with first index as filename and ther index
-    as link of the image scraped from unsplash.
+    """Retrieve images from unsplash.
+
+    Returns a list of tuples containing filename and url of the image.
     """
     soup = make_soup(url)
     '''Selects desired bs4 tags, soup.select is a recursive function,
@@ -59,9 +55,9 @@ def get_unsplash_image_links(url, no_of_images):
 
 
 def get_reddit_image_links(url, no_of_images):
-    """
-    returns a list of tuples,with first index as filename and ther index
-    as link of the image scraped from reddit.
+    """Retrieve images from reddit.
+
+    Returns a list of tuples containing filename and url of the image.
     """
     # reddit requires .json format for the URL
     page = make_json(url+'/.json')
@@ -92,8 +88,9 @@ def get_reddit_image_links(url, no_of_images):
 
 
 def get_desktoppr_image_links(url, no_of_images):
-    """
-    returns a list of tuples, (filename, image_url)
+    """Retrieve images from desktoppr.
+
+    Returns a list of tuples containing filename and url of the image.
     """
     responses = []
     image_links = []
@@ -116,9 +113,7 @@ def get_desktoppr_image_links(url, no_of_images):
 
 
 def get_image_links(url, count):
-    '''
-    Returns
-    '''
+    """Return the links for images."""
     image_links = []
 
     if 'unsplash' in url:  # For Unsplash
@@ -133,7 +128,8 @@ def get_image_links(url, count):
     return image_links
 
 
-def download_store_images(full_path, image_link):
+def download_store_images(full_path, image_link):  # pragma no-cover
+    """Download and store the images to the specified path."""
     try:
         urlretrieve(image_link,
                     full_path,
@@ -143,9 +139,7 @@ def download_store_images(full_path, image_link):
 
 
 def get_images(url, directory, count):
-    '''
-    scrape images from /r/wallpapers
-    '''
+    """Scrape images from a URL into a directory."""
     no_of_images = int(count)
     image_links = get_image_links(url, no_of_images)
     for image in image_links:

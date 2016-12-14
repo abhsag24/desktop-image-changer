@@ -1,3 +1,5 @@
+"""Module that schedules the wallpaper change."""
+
 from uiplib.setWallpaper import change_background
 from uiplib.utils.utils import get_percentage
 from uiplib.scrape.onlineFetch import onlineFetch
@@ -18,8 +20,10 @@ except ImportError:
 
 
 class scheduler():
+    """Class which schedules the wallpaper change."""
 
     def __init__(self, offline, pics_folder, timeout, website, count, service):
+        """Initialize the scheduler configuration."""
         self.website = website
         self.timeout = timeout
         self.directory = pics_folder
@@ -59,14 +63,14 @@ class scheduler():
             print("No downloaded images. Try again in online mode.")
 
     def change_random(self):
+        """Change the wallpaper to a random image."""
         filename = random.choice(os.listdir(self.directory))
         path = os.path.join(self.directory, filename)
         print("changing desktop wallpaper to: ", path)
         change_background(path)
 
     def kbhit(self):
-        ''' Returns True if keyboard character was hit, False otherwise.
-        '''
+        """Return True if keyboard character was hit, False otherwise."""
         if self.service:
             return False
         if os.name == 'nt':
@@ -76,9 +80,10 @@ class scheduler():
             return dr != []
 
     def getch(self):
-        ''' Returns a keyboard character after kbhit() has been called.
-            Should not be called in the same program as getarrow().
-        '''
+        """Return a keyboard character after kbhit() has been called.
+
+        Should not be called in the same program as getarrow().
+        """
         s = ''
         if os.name == 'nt':
             return msvcrt.getch().decode('utf-8')
@@ -86,6 +91,7 @@ class scheduler():
             return sys.stdin.read(1)
 
     def changeCycle(self):
+        """Wallpaper change cycle."""
         uold, sold, cold, c, e = os.times()
         while True:
             if not self.kbhit():
@@ -105,7 +111,9 @@ class scheduler():
                 time.sleep(0.1)
 
     def setStartTime(self, time):
+        """Set the start time."""
         self.time = time
 
     def deltaTime(self):
+        """Return the time difference."""
         return (time.time()-self.time)

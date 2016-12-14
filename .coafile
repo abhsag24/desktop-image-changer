@@ -5,3 +5,8 @@ use_spaces = true
 default_actions =
         SpaceConsistencyBear: ApplyPatchAction,
         PEP8Bear: ApplyPatchAction
+
+[Documentation]
+bears = PyDocStyleBear
+files = *.py, uiplib/**/*.py
+ignore = **/__init__.py

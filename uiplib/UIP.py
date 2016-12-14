@@ -1,3 +1,5 @@
+"""Main UIP Module."""
+
 import sys
 import os
 import shutil
@@ -8,6 +10,7 @@ from daemoniker import Daemonizer, send, SIGTERM
 
 
 def main():
+    """Main method of the UIP."""
     settingsParser = ParseSettings()
     settings = settingsParser.settings
     pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
@@ -65,6 +68,7 @@ def main():
 
 
 def exit_UIP():
+    """Exit from UIP program."""
     pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
     if os.path.exists(pid_file):
         send(pid_file, SIGTERM)

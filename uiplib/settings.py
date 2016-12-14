@@ -1,3 +1,4 @@
+"""Module that configures the settings for UIP."""
 import os
 import json
 import argparse
@@ -10,17 +11,21 @@ settings_file_path = os.path.join(HOME_DIR, "settings.json")
 
 
 class ParseSettings:
+    """Argument Parser class."""
 
     def __init__(self):
+        """Initialize the argument parser."""
         self.settings = self.get_settings_from_file()
         self.settings.update(self.get_settings_from_cli())
 
     def get_settings_from_file(self):
+        """Return the settings from file."""
         with open(settings_file_path, "r") as settings_file:
             settings = json.loads(settings_file.read())
         return settings
 
     def get_settings_from_cli(self):
+        """Return the settings from system arguments."""
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument("--offline", action="store_true",
                                  help="Runs UIP in offline mode.")
@@ -56,5 +61,6 @@ class ParseSettings:
 
         return settings
 
-    def show_help(self):
+    def show_help(self):  # pragma: no cover
+        """Method to display the argument help."""
         self.parser.print_help()

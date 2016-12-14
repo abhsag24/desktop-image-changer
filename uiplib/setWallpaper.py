@@ -1,7 +1,10 @@
+"""Module to set wallpaper. Cross-platform."""
+
 import sys
 
 
 def change_background(filename):
+    """Change the wallpaper with the passed file."""
     if sys.platform.startswith('win32'):
         change_windows_background(filename)
 
@@ -13,6 +16,7 @@ def change_background(filename):
 
 
 def change_linux_background(filename):
+    """Wallpaper changer for linux (GDE)."""
     from gi.repository import Gio
 
     gsettings = Gio.Settings.new('org.gnome.desktop.background')
@@ -21,6 +25,7 @@ def change_linux_background(filename):
 
 
 def change_windows_background(filename):
+    """Wallpaper changer for windows."""
     import ctypes
 
     SPI_SETDESKWALLPAPER = 0x14  # which command (20)
@@ -32,6 +37,7 @@ def change_windows_background(filename):
 
 
 def change_osx_background(filename):
+    """Wallpaper changer for macOS."""
     from appscript import app, mactypes  # use applescript modules
 
     se = app('System Events')  # fetch system events

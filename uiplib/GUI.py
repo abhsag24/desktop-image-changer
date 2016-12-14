@@ -1,3 +1,5 @@
+"""Module that builds the Graphical User Interface."""
+
 from uiplib.scheduler import scheduler
 from uiplib.setWallpaper import change_background
 from uiplib.utils.utils import update_settings, check_sites
@@ -11,14 +13,17 @@ import os
 
 
 class Gallery(Frame):
+    """A view to show the pictures."""
 
     def __init__(self, master):
+        """Initialize the gallery."""
         Frame.__init__(self, master)
         self.image = None
         self.cv = None
         self.label = None
 
     def show_error(self):
+        """Method to display errors."""
         self.image = None
         self.cv = None
         self.label = Label(self, wraplength=150,
@@ -28,6 +33,7 @@ class Gallery(Frame):
         self.label.pack(padx=50, pady=50)
 
     def set_image(self, imagePath):
+        """Method to set the image preview."""
         self.label = None
         width = 600
         height = 340
@@ -42,9 +48,10 @@ class Gallery(Frame):
 
 
 class MainWindow:
-    ''' The main window that houses the app '''
+    """The main window that houses the app."""
 
     def __init__(self, settings):
+        """Initialize the Main Window."""
         # configuration
         self.settings = settings
         # base window
@@ -61,13 +68,14 @@ class MainWindow:
         self.create_ui()
 
     def create_ui(self):
-        ''' Method to initialize UI '''
+        """Method to initialize UI."""
         self.notebook = Notebook(self.root)
         self.notebook.pack()
         self.create_general_tab()
         self.create_settings_tab()
 
     def create_settings_tab(self):
+        """Method to create settings tab."""
         self.new_settings = {}
         settings_tab = Frame(self.notebook)
         self.notebook.add(settings_tab, text="Settings")
@@ -143,6 +151,7 @@ class MainWindow:
         apply_button.grid(row=6, column=1, pady=20, sticky=W)
 
     def create_general_tab(self):
+        """Method to create general tab."""
         general_width = 1000
         general_height = general_width*3/4
         general = Frame(self.notebook,
@@ -190,6 +199,7 @@ class MainWindow:
             self.gallery.show_error()
 
     def show_progess(self, show):
+        """Method to display download progress."""
         if show:
             self.progressBar = Progressbar(self.headerFrame,
                                            orient=HORIZONTAL,
@@ -201,14 +211,17 @@ class MainWindow:
             self.progressBar = None
 
     def push(self, x):
+        """Method to push onto UI Queue."""
         self.queue.push(x)
 
     def run(self):
+        """Method that runs the main event loop."""
         self.update_ui()
         # run the main event loop of UI
         self.root.mainloop()
 
     def update_ui(self):
+        """Method that updates UI periodically."""
         # update UI with data received
         while self.queue and not self.queue.empty():
             pass
@@ -216,19 +229,23 @@ class MainWindow:
         self.root.after(200, self.update_ui)
 
     def next_wallpaper(self):
+        """Preview next wallpaper."""
         self.index = (self.index + 1) % len(self.images)
         self.gallery.set_image(self.images[self.index])
 
     def prev_wallpaper(self):
+        """Preview previous wallpaper."""
         self.index -= 1
         self.gallery.set_image(self.images[self.index])
 
     def set_wallpaper(self):
+        """Set the wallpaper which is being previewed."""
         image = self.images[self.index]
         change_background(image)
 
     def toggle_subreddit(self, mainFrame):
-        if self.reddit.get() == True:
+        """Method to toggle the subreddit choice pane."""
+        if self.reddit.get():
             try:
                 self.sub_label.grid()
                 self.sub_entry.grid()
@@ -249,23 +266,28 @@ class MainWindow:
             self.sub_entry.grid_remove()
 
     def download(self):
+        """Method to start download."""
         pass
 
     def flush(self):
+        """Method to flush all images."""
         print("Flush Clicked!")
 
     def update_images(self):
+        """Method to get images from directory."""
         directory = self.settings['pics-folder']
         files = os.listdir(directory)
         self.images = [os.path.join(directory, file) for file in files
                        if (file.endswith('.png') or file.endswith('.jpg'))]
 
     def file_open_helper(self):
+        """Open the dialog to choose where pictures are to be saved."""
         directory = filedialog.askdirectory()
         self.pics_folder.set(directory)
         self.root.update_idletasks()
 
     def handle_settings(self):
+        """Handler to update the settings file."""
         try:
             self.new_settings['pics-folder'] = self.pics_folder.get()
         except AttributeError as e:
@@ -295,5 +317,6 @@ class MainWindow:
         update_settings(self.new_settings)
 
     def retrieve_textbox_input(self, textbox):
+        """Handler to fetch the textbox input."""
         text_input = textbox.get("1.0", END)
         return text_input

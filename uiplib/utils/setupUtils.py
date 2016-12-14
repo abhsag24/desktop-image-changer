@@ -1,15 +1,23 @@
+"""Utility module for setup."""
+
 import sys
 import os
 
 
 def make_dir(dirpath):
+    """Create a directory for the specified path."""
     os.makedirs(dirpath)
     if sys.platform.startswith('linux'):
         os.chmod(dirpath, 0o777)
 
 
+def get_current_version():
+    """Retrieve the current python interpreter version."""
+    return sys.version_info
+
+
 def check_version():
-    """Check for the version of python interpreter"""
+    """Check the version of python interpreter."""
     # Required version of python interpreter
     req_version = (3, 5)
     # Current version of python interpreter

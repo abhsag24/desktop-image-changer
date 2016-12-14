@@ -1,3 +1,5 @@
+"""Module to perform build, package and install."""
+
 import sys
 import os
 import json
@@ -14,6 +16,7 @@ from uiplib.settings import (HOME_DIR,
 
 
 def get_packages():
+    """Method to retrieve packages to be bundled."""
     base_dir = 'uiplib'
     packages = [base_dir]
     for (path, dirs, files) in os.walk(base_dir):
@@ -26,7 +29,8 @@ def get_packages():
     return packages
 
 
-def get_contents(filename):
+def get_requirements(filename):
+    """Method to get the requirements of the specified file."""
     file = open(filename, 'r').readlines()
     out = []
     for a in file:
@@ -55,9 +59,9 @@ if not os.path.isfile(settings_file_path):
         settings_file.write(json.dumps(file_data))
 
 requirements = []
-requirements += get_contents('requirements.txt')
+requirements += get_requirements('requirements.txt')
 if sys.platform.startswith('darwin'):
-    requirements += get_contents('mac-requirements.txt')
+    requirements += get_requirements('mac-requirements.txt')
 
 setup(
     # Name of application:
