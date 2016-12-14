@@ -4,6 +4,7 @@ import shutil
 import unittest
 import time
 from uiplib.utils import setupUtils, utils
+from uiplib.settings import DEFAULT_PICS_FOLDER, NUMBER_OF_IMAGES_TO_PARSE
 
 
 class UtilsTest(unittest.TestCase):
@@ -25,3 +26,25 @@ class UtilsTest(unittest.TestCase):
         with self.assertRaises(SystemExit):
             setupUtils.get_current_version = lambda: (0, 0)
             setupUtils.check_version()
+
+    def test_check_sites(self):
+        self.assertEqual(utils.check_sites({
+                'website': [
+                    'https://unsplash.com/new',
+                    'https://www.reddit.com/r/wallpapers/',
+                    'https://www.reddit.com/r/wallpaper/',
+                    'https://www.reddit.com/r/EarthPorn/',
+                    'https://www.reddit.com/r/VillagePorn/',
+                    'https://www.reddit.com/r/pics/',
+                    'https://api.desktoppr.co/1/wallpapers', ]}),
+                {
+                    'desktoppr': True,
+                    'unsplash': True,
+                    'reddit': [
+                        'https://www.reddit.com/r/wallpapers/',
+                        'https://www.reddit.com/r/wallpaper/',
+                        'https://www.reddit.com/r/EarthPorn/',
+                        'https://www.reddit.com/r/VillagePorn/',
+                        'https://www.reddit.com/r/pics/'
+                    ]
+                })
