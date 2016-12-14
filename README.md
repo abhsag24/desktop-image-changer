@@ -27,7 +27,11 @@ To install the requirements first run the command
 ```
 sudo python3 setup.py install
 ```
+
 >Note: We only support Python 3.5 or later versions.
+
+>Note: make sure you have setuptools, to do that run:
+ `pip install setuptools` 
 
 >Note: there is no sudo for windows as well as when you have root privelages.
 Just run commands without sudo
