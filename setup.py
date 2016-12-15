@@ -60,30 +60,30 @@ if sys.platform.startswith('darwin'):
     requirements += get_contents('mac-requirements.txt')
 
 setup(
-    
+
     name="UIP",
 
     version="0.0.3",
 
-   
+
     author="uip-dev",
     author_email="uip.developers@gmail.com",
 
-   
+
     packages=get_packages(),
 
     license="LICENSE",
 
     url="https://www.github.com/NIT-dgp/UIP",
 
-    
+
     description="A library to get new wallpapers.",
     long_description=open("README.md").read(),
 
-  
+
     install_requires=requirements,
 
-    
+
     scripts=[
         "UIP"
     ],
