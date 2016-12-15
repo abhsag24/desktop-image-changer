@@ -2,7 +2,7 @@
 
 from bs4 import BeautifulSoup
 import requests
-from urllib.request import urlretrieve
+from urllib.request import urlretrieve, getproxies
 import os
 import sys
 import json
@@ -10,14 +10,24 @@ import json
 
 def make_soup(url):  # pragma: no cover
     """Make soup, that is basically parsing the html document."""
-    response = requests.get(url, headers={'User-agent': 'UIP'})
+    response = requests.get(
+        url,
+        headers={'User-agent': 'UIP'},
+        # gets system proxy (if it is currently using one)
+        proxies=getproxies())
+
     html = response.content
     return BeautifulSoup(html, "html.parser")
 
 
 def make_json(url):  # pragma: no cover
     """Make a dictionary out of a json file."""
-    response = requests.get(url, headers={'User-agent': 'UIP'})
+    response = requests.get(
+        url,
+        headers={'User-agent': 'UIP'},
+        # gets system proxy (if it is currently using one)
+        proxies=getproxies())
+
     json_file = response.text
     data = json.loads(json_file)
     return data
@@ -46,7 +56,7 @@ def get_unsplash_image_links(url, no_of_images):
 
     for a_tag in a_tags:
         image_url = a_tag['href']
-        filename = image_url.split('/')[-2]+".jpg"
+        filename = image_url.split('/')[-2] + ".jpg"
         image_links.append((filename, image_url))
         if(len(image_links) >= no_of_images):
             break
@@ -60,7 +70,7 @@ def get_reddit_image_links(url, no_of_images):
     Returns a list of tuples containing filename and url of the image.
     """
     # reddit requires .json format for the URL
-    page = make_json(url+'/.json')
+    page = make_json(url + '/.json')
     image_links = []
     children = []
     try:
