@@ -1,5 +1,4 @@
 [Default]
-bear_dirs = bears
 bears = PEP8Bear, LineLengthBear, SpaceConsistencyBear
 files = *.py, uiplib/**/*.py, tests/**/*.py
 use_spaces = true
