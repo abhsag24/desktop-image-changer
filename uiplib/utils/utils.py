@@ -19,3 +19,19 @@ def update_settings(new_settings):
         _file.write(json.dumps(new_settings, indent=4, sort_keys=True))
     os.remove(settings_file)
     os.rename(temp_file, settings_file)
+
+
+def check_sites(settings):
+    sites_present = {
+        'unsplash': False,
+        'reddit': [],
+        'desktoppr': False
+    }
+    for site in settings['website']:
+        for key in sites_present:
+            if key in site:
+                if key == 'reddit':
+                    sites_present[key].append(site)
+                else:
+                    sites_present[key] = True
+    return sites_present

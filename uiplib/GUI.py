@@ -1,6 +1,6 @@
 from uiplib.scheduler import scheduler
 from uiplib.setWallpaper import change_background
-from uiplib.utils.utils import update_settings
+from uiplib.utils.utils import update_settings, check_sites
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
@@ -81,11 +81,25 @@ class MainWindow:
                               text="Browse",
                               command=self.file_open_helper)
         input_browse.grid(row=0, column=1, padx=10, pady=10, sticky=W)
+        self.pics_folder = StringVar()
+        self.pics_folder.set(self.settings['pics-folder'])
+        choice_label = Label(mainFrame, textvariable=self.pics_folder)
+        choice_label.grid(row=0, column=2,
+                          padx=10, pady=10,
+                          sticky=W)
 
         # Add sites.
         self.unsplash = BooleanVar()
         self.reddit = BooleanVar()
         self.desktoppr = BooleanVar()
+        self.sites_list = check_sites(self.settings)
+        self.unsplash.set(self.sites_list['unsplash'])
+        self.desktoppr.set(self.sites_list['desktoppr'])
+        if self.sites_list['reddit']:
+            self.reddit.set(True)
+            self.toggle_subreddit(mainFrame)
+        else:
+            self.reddit.set(False)
         sites_label = Label(mainFrame, text="Where to download from:")
         sites_label.grid(row=1, padx=10, pady=1, sticky=W)
         sites = ('unsplash', 'reddit', 'desktoppr')
@@ -106,6 +120,7 @@ class MainWindow:
 
         # Timout
         self.timeout_val = StringVar()
+        self.timeout_val.set(int(self.settings['timeout'])/60)
         timeout_label = Label(mainFrame, text="Change Wallpaper in:")
         timeout = Entry(mainFrame, textvariable=self.timeout_val)
         timeout_label.grid(row=4, padx=10, pady=10, sticky=W)
@@ -115,6 +130,7 @@ class MainWindow:
 
         # Number of images per site
         self.count_val = StringVar()
+        self.count_val.set(self.settings["no-of-images"])
         count_label = Label(mainFrame, text="No. images per site:")
         count = Entry(mainFrame, textvariable=self.count_val)
         count_label.grid(row=5, padx=10, pady=10, sticky=W)
@@ -219,6 +235,9 @@ class MainWindow:
             except AttributeError:
                 self.sub_label = Label(mainFrame, text="Enter Subreddits")
                 self.sub_entry = Text(mainFrame, height=10, width=20)
+                for subreddit in self.sites_list['reddit']:
+                    print(subreddit)
+                    self.sub_entry.insert(INSERT, subreddit + " \n")
                 self.sub_label.grid(row=1, column=2, padx=0, pady=0)
                 self.sub_entry.grid(row=2,
                                     column=2,
@@ -243,11 +262,12 @@ class MainWindow:
 
     def file_open_helper(self):
         directory = filedialog.askdirectory()
-        self.pics_folder = directory
+        self.pics_folder.set(directory)
+        self.root.update_idletasks()
 
     def handle_settings(self):
         try:
-            self.new_settings['pics-folder'] = self.pics_folder
+            self.new_settings['pics-folder'] = self.pics_folder.get()
         except AttributeError as e:
             messagebox.showwarning("AttributeError", "No pics folder selected")
             return
