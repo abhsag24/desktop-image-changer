@@ -35,10 +35,10 @@ class Gallery(Frame):
             self.cv = Canvas(self, width=width, height=height)
             self.cv.pack(fill=BOTH, expand=YES)
         self.image = Image.open(imagePath)
-        self.image = self.image.resize((width*2, height*2),
+        self.image = self.image.resize((width, height),
                                        Image.ANTIALIAS)
         self.tk_image = ImageTk.PhotoImage(self.image)
-        self.cv.create_image(0, 0, image=self.tk_image)
+        self.cv.create_image(0, 0, anchor="nw", image=self.tk_image)
 
 
 class MainWindow:
