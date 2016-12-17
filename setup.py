@@ -56,7 +56,7 @@ if not os.path.isfile(settings_file_path):
                              'https://www.reddit.com/r/pics/',
                              'https://api.desktoppr.co/1/wallpapers', ]}
     with open(settings_file_path, "w") as settings_file:
-        settings_file.write(json.dumps(file_data))
+        settings_file.write(json.dumps(file_data, indent=4, sort_keys=True))
 
 requirements = []
 requirements += get_requirements('requirements.txt')
