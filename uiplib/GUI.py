@@ -56,7 +56,7 @@ class MainWindow:
         self.settings = settings
         # base window
         self.root = Tk()
-        self.root.resizable(width=False, height=False)
+        self.root.resizable(width=True, height=True)
         # set window title
         self.root.title("UIP")
         # self.root.wm_iconbitmap() sets icon bitmap
