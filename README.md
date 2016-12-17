@@ -105,6 +105,15 @@ where short log is the area/filename where you make the change
 commit message is the very brief description of the change made by you and any
 other additional details go into the commit body.
 
+**Note**: If you're an absolute newcomer, these sources might help you out.
+Though keep in mind some of the standards are different.
+
+https://coala.io/newcomer
+
+https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud
+
+https://try.github.io/levels/1/challenges/1
+
 Testing
 =======
 
