@@ -53,7 +53,7 @@ def main():
             print("UIP will now connect to internet and download images"
                   " from reddit and unsplash.")
         if settings['ui']:
-            from uiplib.GUI import MainWindow
+            from uiplib.gui.mainGui import MainWindow
             app = MainWindow(settings)
             app.run()
             exit_UIP()
