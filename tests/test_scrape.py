@@ -25,7 +25,7 @@ class ScrapeTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             scrape.get_image_links = lambda x, y: [(
                   'filename.png',
-                  'https://placeholdit.imgix.net/'
+                  'http://placeholdit.imgix.net/'
                   '~text?txtsize=15&txt=image1&w=120&h=120')]
             scrape.get_images('url', directory, 1)
             self.assertEqual(os.listdir(directory), ['filename.png'])
