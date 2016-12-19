@@ -12,7 +12,7 @@ default_actions =
         PEP8Bear: ApplyPatchAction
 
 [linelength]  # Sometimes autopep8 makes too long lines, need to check after!
-files = *.py, uiplib/**/*.py, tests/**/*
+files = *.py, uiplib/**/*.py, tests/**/*.py
 bears = LineLengthBear
 ignore_length_regex = ^.*https?://
 
