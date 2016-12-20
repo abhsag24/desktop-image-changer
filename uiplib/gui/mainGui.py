@@ -79,7 +79,8 @@ class MainWindow:
 
     def prev_wallpaper(self):
         """Preview previous wallpaper."""
-        self.index -= 1
+        self.index = (self.index - 1 if self.index != 0
+                      else len(self.images) - 1)
         self.gallery.set_image(self.images[self.index])
 
     def set_wallpaper(self):
