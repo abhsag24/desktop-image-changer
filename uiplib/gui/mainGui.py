@@ -18,7 +18,7 @@ import os
 class MainWindow:
     """The main window that houses the app."""
 
-    def __init__(self, settings):
+    def __init__(self, settings, wallpaper):
         """Initialize the Main Window."""
         # configuration
         self.settings = settings
@@ -34,6 +34,7 @@ class MainWindow:
         self.update_images()
         # create the UI
         self.create_ui()
+        self.wallpaper = wallpaper
 
     def create_ui(self):
         """Method to initialize UI."""
@@ -86,7 +87,7 @@ class MainWindow:
     def set_wallpaper(self):
         """Set the wallpaper which is being previewed."""
         image = self.images[self.index]
-        change_background(image)
+        self.wallpaper.set(image)
 
     def download(self):
         """Method to start download."""

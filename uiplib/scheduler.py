@@ -1,6 +1,5 @@
 """Module that schedules the wallpaper change."""
 
-from uiplib.setWallpaper import change_background
 from uiplib.utils.utils import get_percentage
 from uiplib.scrape.onlineFetch import onlineFetch
 
@@ -22,13 +21,15 @@ except ImportError:
 class scheduler():
     """Class which schedules the wallpaper change."""
 
-    def __init__(self, offline, pics_folder, timeout, website, count, service):
+    def __init__(self, offline, pics_folder, timeout, website, count, service,
+                 wallpaper):
         """Initialize the scheduler configuration."""
         self.website = website
         self.timeout = timeout
         self.directory = pics_folder
         self.count = count
         self.service = service
+        self.wallpaper = wallpaper
 
         if not offline:
             try:
@@ -67,7 +68,7 @@ class scheduler():
         filename = random.choice(os.listdir(self.directory))
         path = os.path.join(self.directory, filename)
         print("changing desktop wallpaper to: ", path)
-        change_background(path)
+        self.wallpaper.set(path)
 
     def kbhit(self):
         """Return True if keyboard character was hit, False otherwise."""

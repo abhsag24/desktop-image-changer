@@ -5,12 +5,14 @@ import os
 import shutil
 from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
+from uiplib.Wallpaper import Wallpaper
 from uiplib.utils.setupUtils import make_dir
 from daemoniker import Daemonizer, send, SIGTERM
 
 
 def main():
     """Main method of the UIP."""
+    wallpaper = Wallpaper()
     settingsParser = ParseSettings()
     settings = settingsParser.settings
     pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
@@ -54,7 +56,7 @@ def main():
                   " from reddit and unsplash.")
         if settings['ui']:
             from uiplib.gui.mainGui import MainWindow
-            app = MainWindow(settings)
+            app = MainWindow(settings, wallpaper)
             app.run()
             exit_UIP()
         scheduler(settings['offline'],
@@ -62,7 +64,8 @@ def main():
                   settings['timeout'],
                   settings['website'],
                   settings['no-of-images'],
-                  settings['service'])
+                  settings['service'],
+                  wallpaper)
     except KeyboardInterrupt:
         exit_UIP()
 
