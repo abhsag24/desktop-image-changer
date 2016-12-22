@@ -8,9 +8,9 @@ Works with Windows, Mac and Gtk based desktops on Linux.
 Examples Of UIP Wallpapers
 ==========================
 
-![alt text]( examples/UIP_screenshot.png )
-![alt text]( examples/mac_wallpaper.png )
-![alt text]( examples/windows_wallpaper.png )
+![alt text]( https://raw.githubusercontent.com/NIT-dgp/UIP-misc/master/examples/gnome_wallpaper.png )
+![alt text]( https://raw.githubusercontent.com/NIT-dgp/UIP-misc/master/examples/mac_wallpaper.png )
+![alt text]( https://raw.githubusercontent.com/NIT-dgp/UIP-misc/master/examples/win_wallpaper.png )
 
 Set Up
 ======
