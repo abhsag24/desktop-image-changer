@@ -1,16 +1,29 @@
 language: python
+cache: pip
 
-python:
-  - "3.5"
-
-os: linux
-sudo: true
+matrix:
+    include:
+        - os: linux
+          sudo: required
+          dist: trusty
+          python: 3.5
+        - os: osx
+          language: generic
+          cache:
+            directories:
+              - $HOME/Library/Caches/pip
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install python3; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then virtualenv venv -p python3; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        brew update;
+        brew install python3;
+        virtualenv venv -p python3;
+        source venv/bin/activate;
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        sudo apt-get install gsettings-desktop-schemas python3-gi python3-gi-cairo libglib2.0-dev libffi-dev libgirepository1.0 libcairo2-dev python3-cairo-dev;
+       .scripts/PYGO.sh;
+    fi
 
 before_script:
   - make test-install
@@ -18,12 +31,11 @@ before_script:
 script:
   - make install
   - make lint
-  - make test
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        dbus-launch pytest;
+    else
+        make test;
+    fi
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-
-matrix:
-  include:
-    - os: osx
-      language: generic

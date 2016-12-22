@@ -28,8 +28,9 @@ uninstall: clean-pyc
 test-install: clean
 	$(PIP) install --requirement $(TEST_REQUIREMENTS)
 
-test:
+test: 
 	pytest
+
 
 lint:
 	coala --non-interactive
