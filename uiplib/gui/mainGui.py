@@ -1,7 +1,6 @@
 """Module that builds the Graphical User Interface."""
 
 from uiplib.scheduler import scheduler
-from uiplib.setWallpaper import change_background
 from uiplib.utils.utils import update_settings, check_sites
 from uiplib.gui.gallery import Gallery
 from uiplib.gui import generalTab, settingsTab
