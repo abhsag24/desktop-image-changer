@@ -6,7 +6,7 @@ default_actions =
         SpaceConsistencyBear: ApplyPatchAction
 
 [Python]
-bears = PEP8Bear
+bears = PEP8Bear, PyUnusedCodeBear
 files = *.py, uiplib/**/*.py, tests/**/*.py
 default_actions =
         PEP8Bear: ApplyPatchAction

@@ -3,8 +3,8 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
-from uiplib.settings import DEFAULT_SETTINGS
 
+from uiplib.settings import DEFAULT_SETTINGS
 from uiplib.utils.utils import check_sites, update_settings
 
 
@@ -44,7 +44,6 @@ def create_settings_tab(appObj):
         appObj.reddit.set(False)
     sites_label = Label(mainFrame, text="Where to download from:")
     sites_label.grid(row=1, padx=10, pady=1, sticky=W)
-    sites = ('unsplash', 'reddit', 'desktoppr')
     unsplash_radio = Checkbutton(mainFrame,
                                  text="Unsplash",
                                  var=appObj.unsplash)

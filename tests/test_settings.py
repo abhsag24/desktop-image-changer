@@ -1,5 +1,4 @@
 import unittest
-import sys
 from unittest.mock import patch
 from uiplib import settings
 

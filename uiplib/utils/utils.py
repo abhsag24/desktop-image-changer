@@ -1,9 +1,9 @@
 """UIP Main utility module."""
 
 import os
-import sys
 import time
 import json
+
 from uiplib.settings import HOME_DIR
 
 

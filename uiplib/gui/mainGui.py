@@ -1,17 +1,11 @@
 """Module that builds the Graphical User Interface."""
 
-from uiplib.scheduler import scheduler
-from uiplib.utils.utils import update_settings, check_sites
-from uiplib.gui.gallery import Gallery
-from uiplib.gui import generalTab, settingsTab
-
-
-from tkinter import *
-from tkinter import messagebox
-from tkinter.ttk import *
-from PIL import Image, ImageTk
-from queue import Queue
 import os
+from queue import Queue
+from tkinter import *
+from tkinter.ttk import *
+
+from uiplib.gui import generalTab, settingsTab
 
 
 class MainWindow:
@@ -87,10 +81,6 @@ class MainWindow:
         """Set the wallpaper which is being previewed."""
         image = self.images[self.index]
         self.wallpaper.set(image)
-
-    def download(self):
-        """Method to start download."""
-        pass
 
     def flush(self):
         """Method to flush all images."""

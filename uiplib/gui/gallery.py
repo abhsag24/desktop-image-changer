@@ -1,4 +1,5 @@
 """The module houses the class that displays wallpapers in the app."""
+
 from tkinter import *
 from PIL import Image, ImageTk
 

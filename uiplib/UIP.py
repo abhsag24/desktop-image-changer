@@ -3,11 +3,13 @@
 import sys
 import os
 import shutil
+
+from daemoniker import Daemonizer, send, SIGTERM
+
 from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
 from uiplib.Wallpaper import Wallpaper
 from uiplib.utils.setupUtils import make_dir
-from daemoniker import Daemonizer, send, SIGTERM
 
 
 def main():
@@ -26,7 +28,7 @@ def main():
                 if is_setup:
                     print("UIP will now run as a serice.")
                 try:
-                    is_parent = daemonizer(pid_file)
+                    daemonizer(pid_file)
                 except SystemExit:
                     print("UIP service already, running "
                           "Close previous app by running UIP --service stop")

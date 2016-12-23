@@ -1,11 +1,12 @@
 """Module that scrapes the wallpapers."""
 
-from bs4 import BeautifulSoup
-import requests
-from urllib.request import urlretrieve, getproxies
 import os
 import sys
 import json
+from urllib.request import urlretrieve, getproxies
+
+import requests
+from bs4 import BeautifulSoup
 
 
 def make_soup(url):  # pragma: no cover

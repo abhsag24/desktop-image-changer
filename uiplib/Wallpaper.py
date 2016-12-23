@@ -1,4 +1,5 @@
 """Module that gets and sets Wallpaper."""
+
 import sys
 
 

@@ -1,7 +1,8 @@
 """Module to fetch wallpapers."""
 
-from uiplib.scrape.scrape import get_images
 from threading import Thread
+
+from uiplib.scrape.scrape import get_images
 
 
 class onlineFetch(Thread):

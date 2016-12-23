@@ -1,15 +1,14 @@
 """Module that schedules the wallpaper change."""
 
-from uiplib.utils.utils import get_percentage
-from uiplib.scrape.onlineFetch import onlineFetch
-
 import os
 import time
-from uiplib.scrape.scrape import get_images
-from threading import Thread
 import sys
 from select import select
 import random
+
+from uiplib.utils.utils import get_percentage
+from uiplib.scrape.onlineFetch import onlineFetch
+from uiplib.scrape.scrape import get_images
 
 try:
     import msvcrt
@@ -85,7 +84,6 @@ class scheduler():
 
         Should not be called in the same program as getarrow().
         """
-        s = ''
         if os.name == 'nt':
             return msvcrt.getch().decode('utf-8')
         else:

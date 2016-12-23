@@ -30,9 +30,6 @@ def create_general_tab(appObj):
     nextButton.pack(side=RIGHT, padx=5, pady=5)
     prevButton.pack(side=LEFT, padx=5, pady=5)
 
-    downloadBtn = Button(footerFrame,
-                         text="Download",
-                         command=appObj.download)
     setWallpaperBtn = Button(footerFrame,
                              text="Set Wallpaper",
                              command=appObj.set_wallpaper)

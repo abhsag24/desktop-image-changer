@@ -1,4 +1,5 @@
 """Module that configures the settings for UIP."""
+
 import os
 import json
 import argparse

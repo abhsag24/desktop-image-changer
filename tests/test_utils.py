@@ -3,8 +3,8 @@ import sys
 import shutil
 import unittest
 import time
+
 from uiplib.utils import setupUtils, utils
-from uiplib.settings import DEFAULT_PICS_FOLDER, NUMBER_OF_IMAGES_TO_PARSE
 
 
 class UtilsTest(unittest.TestCase):
