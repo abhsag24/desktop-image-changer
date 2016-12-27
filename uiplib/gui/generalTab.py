@@ -37,7 +37,6 @@ def create_general_tab(appObj):
                       text="Flush",
                       command=appObj.flush)
     setWallpaperBtn.pack(padx=5, pady=5)
-    downloadBtn.pack(padx=5, pady=5)
     flushBtn.pack(padx=5, pady=5)
 
     appObj.progress = 0
