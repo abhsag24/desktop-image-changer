@@ -8,9 +8,10 @@ from uiplib.uipImage import UipImage
 class Gallery(Frame):
     """A view to show the pictures."""
 
-    def __init__(self, master):
+    def __init__(self, master, appObj):
         """Initialize the gallery."""
         Frame.__init__(self, master)
+        self.appObj = appObj
         self.image = None
         self.cv = None
         self.label = None
@@ -35,10 +36,11 @@ class Gallery(Frame):
             self.cv = Canvas(self, width=self.width, height=self.height)
             self.cv.pack(fill=BOTH, expand=YES)
         if not self.slider:
+            self._job = None
             self.slider = Scale(self,
                                 orient=HORIZONTAL,
                                 from_=0, to=30,
-                                command=self.blur_image,
+                                command=self._blur_helper,
                                 label="Blur", showvalue=0)
             self.slider.pack()
         self.image = UipImage(imagePath)
@@ -50,7 +52,13 @@ class Gallery(Frame):
         self.tk_image = ImageTk.PhotoImage(show_image)
         self.cv.create_image(0, 0, anchor="nw", image=self.tk_image)
 
-    def blur_image(self, val):
-        """Blur chosen image by val amount."""
-        show = self.image.blur(val)
+    def _blur_helper(self, event):
+        """Helper to schedule the blur_image task."""
+        if self._job:
+            self.appObj.after_cancel(self._job)
+        self._job = self.appObj.after(250, self.blur_image)
+
+    def blur_image(self):
+        """Apply blur to the chosen image."""
+        show = self.image.blur(self.slider.get())
         self.show_image(show)
