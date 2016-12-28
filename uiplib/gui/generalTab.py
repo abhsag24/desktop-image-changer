@@ -22,10 +22,10 @@ def create_general_tab(appObj):
     footerFrame.grid(row=2, column=0, sticky=S+W+E)
 
     nextButton = Button(mainFrame,
-                        text=">",
+                        text="▶",
                         command=appObj.next_wallpaper)
     prevButton = Button(mainFrame,
-                        text="<",
+                        text="◀",
                         command=appObj.prev_wallpaper)
     nextButton.pack(side=RIGHT, padx=5, pady=5)
     prevButton.pack(side=LEFT, padx=5, pady=5)
@@ -36,8 +36,8 @@ def create_general_tab(appObj):
     flushBtn = Button(footerFrame,
                       text="Flush",
                       command=appObj.flush)
-    setWallpaperBtn.pack(padx=5, pady=5)
-    flushBtn.pack(padx=5, pady=5)
+    flushBtn.pack(side=RIGHT, padx=5, pady=5)
+    setWallpaperBtn.pack(side=RIGHT, padx=5, pady=5)
 
     appObj.progress = 0
     appObj.progressBar = None
