@@ -1,7 +1,8 @@
 """The module houses the class that displays wallpapers in the app."""
 
 from tkinter import *
-from PIL import Image, ImageTk
+from PIL import ImageTk
+from uiplib.uipImage import UipImage
 
 
 class Gallery(Frame):
@@ -13,6 +14,7 @@ class Gallery(Frame):
         self.image = None
         self.cv = None
         self.label = None
+        self.slider = None
 
     def show_error(self):
         """Method to display errors."""
@@ -27,13 +29,28 @@ class Gallery(Frame):
     def set_image(self, imagePath):
         """Method to set the image preview."""
         self.label = None
-        width = 600
-        height = 340
+        self.width = 600
+        self.height = 340
         if not self.cv:
-            self.cv = Canvas(self, width=width, height=height)
+            self.cv = Canvas(self, width=self.width, height=self.height)
             self.cv.pack(fill=BOTH, expand=YES)
-        self.image = Image.open(imagePath)
-        self.image = self.image.resize((width, height),
-                                       Image.ANTIALIAS)
-        self.tk_image = ImageTk.PhotoImage(self.image)
+        if not self.slider:
+            self.slider = Scale(self,
+                                orient=HORIZONTAL,
+                                from_=0, to=30,
+                                command=self.blur_image,
+                                label="Blur", showvalue=0)
+            self.slider.pack()
+        self.image = UipImage(imagePath)
+        self.show_image(self.image)
+
+    def show_image(self, image):
+        """Show the image on canvas."""
+        show_image = image.resize((self.width, self.height))
+        self.tk_image = ImageTk.PhotoImage(show_image)
         self.cv.create_image(0, 0, anchor="nw", image=self.tk_image)
+
+    def blur_image(self, val):
+        """Blur chosen image by val amount."""
+        show = self.image.blur(val)
+        self.show_image(show)

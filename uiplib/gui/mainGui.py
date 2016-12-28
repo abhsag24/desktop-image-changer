@@ -79,8 +79,8 @@ class MainWindow:
 
     def set_wallpaper(self):
         """Set the wallpaper which is being previewed."""
-        image = self.images[self.index]
-        self.wallpaper.set(image)
+        self.gallery.image.save()
+        self.wallpaper.set(self.gallery.image.image_path)
 
     def flush(self):
         """Method to flush all images."""
