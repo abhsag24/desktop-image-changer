@@ -43,33 +43,35 @@ def main():
           " images from reddit and also to schedule the setting of these"
           " images as your desktop wallpaper."
           " \nPress ctrl-c to exit")
-    try:
-        if settings['offline']:
-            print("You have choosen to run UIP in offline mode.")
-        if settings['flush']:
-            print("Deleting all downloaded wallpapers...")
-            try:
-                shutil.rmtree(settings['pics-folder'])
-                make_dir(settings['pics-folder'])
-            except FileNotFoundError:
-                pass
-        if not settings['offline']:
-            print("UIP will now connect to internet and download images"
-                  " from reddit and unsplash.")
-        if settings['ui']:
-            from uiplib.gui.mainGui import MainWindow
-            app = MainWindow(settings, wallpaper)
-            app.run()
-            exit_UIP()
-        scheduler(settings['offline'],
-                  settings['pics-folder'],
-                  settings['timeout'],
-                  settings['website'],
-                  settings['no-of-images'],
-                  settings['service'],
-                  wallpaper)
-    except KeyboardInterrupt:
+    if settings['offline']:
+        print("You have choosen to run UIP in offline mode.")
+    if settings['flush']:
+        print("Deleting all downloaded wallpapers...")
+        try:
+            shutil.rmtree(settings['pics-folder'])
+            make_dir(settings['pics-folder'])
+        except FileNotFoundError:
+            pass
+    if not settings['offline']:
+        print("UIP will now connect to internet and download images"
+              " from reddit and unsplash.")
+    if settings['ui']:
+        from uiplib.gui.mainGui import MainWindow
+        app = MainWindow(settings, wallpaper)
+        app.run()
         exit_UIP()
+
+    else:
+        try:
+            scheduler(settings['offline'],
+                      settings['pics-folder'],
+                      settings['timeout'],
+                      settings['website'],
+                      settings['no-of-images'],
+                      settings['service'],
+                      wallpaper)
+        except KeyboardInterrupt:
+            exit_UIP()
 
 
 def exit_UIP():
