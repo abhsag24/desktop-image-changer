@@ -70,7 +70,7 @@ def main():
                                          settings['no-of-images'],
                                          not (settings['service'] or
                                               settings['ui']),
-                                         self.wallpaper)
+                                         wallpaper)
             scheduler_object.setDaemon(True)
             scheduler_object.start()
         except KeyboardInterrupt:
