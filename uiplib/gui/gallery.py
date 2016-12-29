@@ -2,7 +2,9 @@
 
 from tkinter import *
 from PIL import ImageTk
+from PIL import Image
 from uiplib.uipImage import UipImage
+import os
 
 
 class Gallery(Frame):
@@ -42,7 +44,12 @@ class Gallery(Frame):
                                 label="Blur", showvalue=0)
             self.slider.pack()
         self.image = UipImage(imagePath)
-        self.show_image(self.image)
+        im = Image.open(imagePath)
+        try:
+            im.load()
+            self.show_image(self.image)
+        except IOError as e:
+            os.remove(imagePath)
 
     def show_image(self, image):
         """Show the image on canvas."""
