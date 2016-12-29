@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter.ttk import *
 
 from uiplib.gui import generalTab, settingsTab
+from uiplib.scheduler import scheduler
 
 
 class MainWindow:
@@ -28,6 +29,7 @@ class MainWindow:
         # create the UI
         self.create_ui()
         self.wallpaper = wallpaper
+        self.scheduler_object = None
 
     def create_ui(self):
         """Method to initialize UI."""
@@ -92,3 +94,17 @@ class MainWindow:
         files = os.listdir(directory)
         self.images = [os.path.join(directory, file) for file in files
                        if (file.endswith('.png') or file.endswith('.jpg'))]
+
+    def play(self):
+        """Start scheduling wallpapers."""
+        if not self.scheduler_object:
+            self.scheduler_object = scheduler(self.settings['offline'],
+                                              self.settings['pics-folder'],
+                                              self.settings['timeout'],
+                                              self.settings['website'],
+                                              self.settings['no-of-images'],
+                                              not (self.settings['service'] or
+                                                   self.settings['ui']),
+                                              self.wallpaper)
+            self.scheduler_object.setDaemon(True)
+            self.scheduler_object.start()

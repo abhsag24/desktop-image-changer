@@ -15,52 +15,23 @@ try:
 except ImportError:
     # not on windows
     pass
+from threading import Thread
 
 
-class scheduler():
+class scheduler(Thread):
     """Class which schedules the wallpaper change."""
 
-    def __init__(self, offline, pics_folder, timeout, website, count, service,
-                 wallpaper):
+    def __init__(self, offline, pics_folder, timeout, website, count,
+                 skip_wallpaper, wallpaper):
         """Initialize the scheduler configuration."""
         self.website = website
         self.timeout = timeout
         self.directory = pics_folder
         self.count = count
-        self.service = service
+        self.skip_wallpaper = skip_wallpaper
         self.wallpaper = wallpaper
-
-        if not offline:
-            try:
-                thread_nos = len(self.website)
-                for i in range(thread_nos):
-                    # Init the thread
-                    fetch_thread = onlineFetch(self.website[i],
-                                               self.directory, self.count)
-                    # die upon main thread exit
-                    fetch_thread.setDaemon(True)
-
-                    # Start new Threads
-                    fetch_thread.start()
-
-            except ValueError as e:
-                print("File could not be retrieved.", e)
-
-            while not ((os.path.isdir(self.directory) and
-                        os.listdir(self.directory) != [])):
-                print('Downloading images..')
-                time.sleep(60)
-        elif not os.path.exists(self.directory):
-            os.makedirs(self.directory)
-
-        if os.listdir(self.directory) != []:
-            print("You can wait for next wallpaper or skip this wallpaper"
-                  " by just pressing enter.")
-            self.change_random()
-            self.setStartTime(time.time())
-            self.changeCycle()
-        else:
-            print("No downloaded images. Try again in online mode.")
+        self.offline = offline
+        Thread.__init__(self)
 
     def change_random(self):
         """Change the wallpaper to a random image."""
@@ -71,7 +42,7 @@ class scheduler():
 
     def kbhit(self):
         """Return True if keyboard character was hit, False otherwise."""
-        if self.service:
+        if not self.skip_wallpaper:
             return False
         if os.name == 'nt':
             return msvcrt.kbhit()
@@ -116,3 +87,37 @@ class scheduler():
     def deltaTime(self):
         """Return the time difference."""
         return (time.time()-self.time)
+
+    def run(self):
+        """Begin Scheduling Wallpapers."""
+        if not self.offline:
+            try:
+                thread_nos = len(self.website)
+                for i in range(thread_nos):
+                    # Init the thread
+                    fetch_thread = onlineFetch(self.website[i],
+                                               self.directory, self.count)
+                    # die upon main thread exit
+                    fetch_thread.setDaemon(True)
+
+                    # Start new Threads
+                    fetch_thread.start()
+
+            except ValueError as e:
+                print("File could not be retrieved.", e)
+
+            while not ((os.path.isdir(self.directory) and
+                        os.listdir(self.directory) != [])):
+                print('Downloading images..')
+                time.sleep(60)
+        elif not os.path.exists(self.directory):
+            os.makedirs(self.directory)
+
+        if os.listdir(self.directory) != []:
+            print("You can wait for next wallpaper or skip this wallpaper"
+                  " by just pressing enter.")
+            self.change_random()
+            self.setStartTime(time.time())
+            self.changeCycle()
+        else:
+            print("No downloaded images. Try again in online mode.")

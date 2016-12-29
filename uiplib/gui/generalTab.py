@@ -48,3 +48,10 @@ def create_general_tab(appObj):
         appObj.gallery.set_image(appObj.images[appObj.index])
     else:
         appObj.gallery.show_error()
+
+    # Add Play Button to start.
+    playBtn = Button(
+        footerFrame,
+        text="Play",
+        command=appObj.play)
+    playBtn.pack(side=RIGHT, padx=5, pady=5)
