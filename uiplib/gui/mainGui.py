@@ -4,9 +4,11 @@ import os
 from queue import Queue
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import messagebox
 
 from uiplib.gui import generalTab, settingsTab
 from uiplib.scheduler import scheduler
+from uiplib.utils.utils import flush_wallpapers
 
 
 class MainWindow:
@@ -86,10 +88,19 @@ class MainWindow:
 
     def flush(self):
         """Method to flush all images."""
-        print("Flush Clicked!")
+        ask = messagebox.askquestion(
+                               "Flush!", "Are You Sure? This will empty"
+                               " the contents in your pics folder",
+                                icon='warning')
+        if ask == 'yes':
+            flush_wallpapers(self.settings['pics-folder'])
+            self.update_images()
+        else:
+            print("Not Flushing!")
 
     def update_images(self):
         """Method to get images from directory."""
+        print("Updating Image List")
         directory = self.settings['pics-folder']
         files = os.listdir(directory)
         self.images = [os.path.join(directory, file) for file in files

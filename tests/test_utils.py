@@ -9,8 +9,22 @@ from uiplib.utils import setupUtils, utils
 
 class UtilsTest(unittest.TestCase):
 
+    def test_flush_wallpapers(self):
+        testdir = os.path.join(os.path.expanduser("~"), '.WAKEUPDOLORES')
+        setupUtils.make_dir(testdir)
+        test_dir_to_delete = os.path.join(testdir, 'tobedeleted')
+        setupUtils.make_dir(test_dir_to_delete)
+        utils.flush_wallpapers(testdir)
+        self.assertEqual(os.listdir(testdir), [])
+        shutil.rmtree(testdir)
+
+    def test_flush_wallpapers_raise_exception(self):
+        testdir = os.path.join(os.path.expanduser("~"), '.WAKEUPDOLORES')
+        utils.flush_wallpapers(testdir)
+        self.assertEqual(os.path.isdir(testdir), False)
+
     def test_make_dir(self):
-        testdir = os.path.join(os.path.expanduser("~"), '.test')
+        testdir = os.path.join(os.path.expanduser("~"), '.WAKEUPDOLORES')
         setupUtils.make_dir(testdir)
         self.assertTrue(os.path.exists(testdir))
         if sys.platform.startswith('linux'):

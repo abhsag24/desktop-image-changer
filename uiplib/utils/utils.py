@@ -3,8 +3,10 @@
 import os
 import time
 import json
+import shutil
 
 from uiplib.settings import HOME_DIR
+from uiplib.utils.setupUtils import make_dir
 
 
 def get_percentage(unew, uold, start):
@@ -42,3 +44,13 @@ def check_sites(settings):
                 else:
                     sites_present[key] = True
     return sites_present
+
+
+def flush_wallpapers(folder):
+    """Delete all downloaded wallpapers."""
+    print("Deleting all downloaded wallpapers...")
+    try:
+        shutil.rmtree(folder)
+        make_dir(folder)
+    except FileNotFoundError:
+        pass
