@@ -2,14 +2,13 @@
 
 import sys
 import os
-import shutil
 
 from daemoniker import Daemonizer, send, SIGTERM
 
 from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
 from uiplib.Wallpaper import Wallpaper
-from uiplib.utils.setupUtils import make_dir
+from uiplib.utils.utils import flush_wallpapers
 
 
 def main():
@@ -46,12 +45,7 @@ def main():
     if settings['offline']:
         print("You have choosen to run UIP in offline mode.")
     if settings['flush']:
-        print("Deleting all downloaded wallpapers...")
-        try:
-            shutil.rmtree(settings['pics-folder'])
-            make_dir(settings['pics-folder'])
-        except FileNotFoundError:
-            pass
+        flush_wallpapers(settings['pics-folder'])
     if not settings['offline']:
         print("UIP will now connect to internet and download images"
               " from reddit and unsplash.")
