@@ -1,6 +1,7 @@
 PYTHON = python3
 PIP = pip3
 SETUP_FILE = setup.py
+COAFILE = .coafile
 MODULE_NAME = UIP
 TEST_REQUIREMENTS = test-requirements.txt
 
@@ -27,10 +28,10 @@ uninstall: clean-pyc
 
 test-install: clean
 	$(PIP) install --requirement $(TEST_REQUIREMENTS)
+	cib install -c $(COAFILE)
 
-test: 
+test:
 	pytest
-
 
 lint:
 	coala --non-interactive
