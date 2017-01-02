@@ -7,8 +7,7 @@ from select import select
 import random
 
 from uiplib.utils.utils import get_percentage
-from uiplib.scrape.onlineFetch import onlineFetch
-from uiplib.scrape.scrape import get_images
+from uiplib.scrape import download
 
 try:
     import msvcrt
@@ -22,7 +21,7 @@ class scheduler(Thread):
     """Class which schedules the wallpaper change."""
 
     def __init__(self, offline, pics_folder, timeout, website, count,
-                 skip_wallpaper, wallpaper):
+                 skip_wallpaper, wallpaper, appObj=None):
         """Initialize the scheduler configuration."""
         self.website = website
         self.timeout = timeout
@@ -31,6 +30,7 @@ class scheduler(Thread):
         self.skip_wallpaper = skip_wallpaper
         self.wallpaper = wallpaper
         self.offline = offline
+        self.appObj = appObj
         Thread.__init__(self)
 
     def change_random(self):
@@ -91,25 +91,12 @@ class scheduler(Thread):
     def run(self):
         """Begin Scheduling Wallpapers."""
         if not self.offline:
-            try:
-                thread_nos = len(self.website)
-                for i in range(thread_nos):
-                    # Init the thread
-                    fetch_thread = onlineFetch(self.website[i],
-                                               self.directory, self.count)
-                    # die upon main thread exit
-                    fetch_thread.setDaemon(True)
-
-                    # Start new Threads
-                    fetch_thread.start()
-
-            except ValueError as e:
-                print("File could not be retrieved.", e)
-
-            while not ((os.path.isdir(self.directory) and
-                        os.listdir(self.directory) != [])):
-                print('Downloading images..')
-                time.sleep(60)
+            download_thread = Thread(
+                            target=download,
+                            args=(self.website, self.directory, self.count),
+                            kwargs={"appObj": self.appObj},
+                            daemon=True)
+            download_thread.start()
         elif not os.path.exists(self.directory):
             os.makedirs(self.directory)
 
@@ -119,5 +106,5 @@ class scheduler(Thread):
             self.change_random()
             self.setStartTime(time.time())
             self.changeCycle()
-        else:
-            print("No downloaded images. Try again in online mode.")
+        # else:
+        #     print("No downloaded images. Try again in online mode.")

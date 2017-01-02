@@ -1,14 +1,15 @@
 """Module that builds the Graphical User Interface."""
 
 import os
-from queue import Queue
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
+from threading import Thread
 
 from uiplib.gui import generalTab, settingsTab
 from uiplib.scheduler import scheduler
 from uiplib.utils.utils import flush_wallpapers
+from uiplib.scrape import download
 
 
 class MainWindow:
@@ -24,12 +25,9 @@ class MainWindow:
         # set window title
         self.root.title("UIP")
         # self.root.wm_iconbitmap() sets icon bitmap
-        self.queue = Queue()
+        # self.queue = Queue()
         self.index = 0
         self.images = []
-        self.update_images()
-        # create the UI
-        self.create_ui()
         self.wallpaper = wallpaper
         self.scheduler_object = None
 
@@ -40,35 +38,33 @@ class MainWindow:
         generalTab.create_general_tab(self)
         settingsTab.create_settings_tab(self)
 
-    def show_progess(self, show):
-        """Method to display download progress."""
-        if show:
-            self.progressBar = Progressbar(self.headerFrame,
-                                           orient=HORIZONTAL,
-                                           length='300',
-                                           variable=self.progress,
-                                           mode='determinate')
-            self.progressBar.pack(fill=BOTH, padx=5, pady=5)
-        else:
-            self.progressBar = None
+    # def show_progess(self, show):
+    #     """Method to display download progress."""
+    #     if show:
+    #         self.progressBar = Progressbar(self.headerFrame,
+    #                                        orient=HORIZONTAL,
+    #                                        length='300',
+    #                                        variable=self.progress,
+    #                                        mode='determinate')
+    #         self.progressBar.pack(fill=BOTH, padx=5, pady=5)
+    #     else:
+    #         self.progressBar = None
 
-    def push(self, x):
-        """Method to push onto UI Queue."""
-        self.queue.push(x)
+    # def push(self, x):
+    #     """Method to push onto UI Queue."""
+    #     self.queue.push(x)
 
     def run(self):
         """Method that runs the main event loop."""
+        self.create_ui()
         self.update_ui()
         # run the main event loop of UI
         self.root.mainloop()
 
     def update_ui(self):
         """Method that updates UI periodically."""
-        # update UI with data received
-        while self.queue and not self.queue.empty():
-            pass
-        # update UI after every 200ms
-        self.root.after(200, self.update_ui)
+        self.update_images()
+        generalTab.update_gallery(self)
 
     def next_wallpaper(self):
         """Preview next wallpaper."""
@@ -94,13 +90,21 @@ class MainWindow:
                                 icon='warning')
         if ask == 'yes':
             flush_wallpapers(self.settings['pics-folder'])
-            self.update_images()
+            download_thread = Thread(
+                            target=download,
+                            args=(self.settings['website'],
+                                  self.settings['pics-folder'],
+                                  self.settings['no-of-images']),
+                            kwargs={"appObj": self},
+                            daemon=True)
+            download_thread.start()
+            self.update_ui()
         else:
             print("Not Flushing!")
 
     def update_images(self):
         """Method to get images from directory."""
-        print("Updating Image List")
+        # print("Updating Image List")
         directory = self.settings['pics-folder']
         files = os.listdir(directory)
         self.images = [os.path.join(directory, file) for file in files
@@ -116,6 +120,7 @@ class MainWindow:
                                               self.settings['no-of-images'],
                                               not (self.settings['service'] or
                                                    self.settings['ui']),
-                                              self.wallpaper)
+                                              self.wallpaper,
+                                              appObj=self)
             self.scheduler_object.setDaemon(True)
             self.scheduler_object.start()

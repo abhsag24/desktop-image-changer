@@ -1,8 +1,9 @@
 import unittest
-from uiplib.Wallpaper import Wallpaper
 import tempfile
 import sys
 import pytest
+
+from uiplib.Wallpaper import Wallpaper
 
 
 class WallpaperTest(unittest.TestCase):
