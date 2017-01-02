@@ -44,10 +44,7 @@ def create_general_tab(appObj):
 
     appObj.gallery = Gallery(mainFrame, appObj.root)
     appObj.gallery.pack(fill=BOTH)
-    if len(appObj.images) != 0:
-        appObj.gallery.set_image(appObj.images[appObj.index])
-    else:
-        appObj.gallery.show_error()
+    update_gallery(appObj)
 
     # Add Play Button to start.
     playBtn = Button(
@@ -55,3 +52,19 @@ def create_general_tab(appObj):
         text="Play",
         command=appObj.play)
     playBtn.pack(side=RIGHT, padx=5, pady=5)
+
+
+def update_gallery(appObj):
+    """Update the gallery."""
+    if appObj.gallery.label:
+        appObj.gallery.label.pack_forget()
+    if appObj.gallery.cv:
+        appObj.gallery.cv.pack_forget()
+    if appObj.gallery.slider:
+        appObj.gallery.slider.pack_forget()
+        appObj.gallery.slider = None
+    if len(appObj.images) != 0:
+        appObj.gallery.set_image(
+            appObj.images[(appObj.index) % len(appObj.images)])
+    else:
+        appObj.gallery.show_error()

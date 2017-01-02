@@ -151,9 +151,23 @@ def download_store_images(full_path, image_link):  # pragma no-cover
         return False
 
 
-def get_images(url, directory, count):
+def get_images(url, directory, count, appObj=None):
     """Scrape images from a URL into a directory."""
     no_of_images = int(count)
     image_links = get_image_links(url, no_of_images)
     for image in image_links:
         download_store_images(os.path.join(directory, image[0]), image[1])
+        if appObj:
+            print("\nDownloaded")
+            appObj.update_ui()
+
+
+def download(website, directory, count, appObj=None):
+    """downloads."""
+    print('Downloading images..')
+    try:
+        for site in website:
+            get_images(site, directory, count, appObj=appObj)
+
+    except ValueError as e:
+        print("File could not be retrieved.", e)
