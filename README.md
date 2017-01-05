@@ -1,5 +1,8 @@
 UIP Is Pretty
 =============
+[![Build Status](https://travis-ci.org/NIT-dgp/UIP.svg?branch=master)](https://travis-ci.org/NIT-dgp/UIP)
+[![Build status](https://ci.appveyor.com/api/projects/status/9igx0t9e6e6utt9l/branch/master?svg=true)](https://ci.appveyor.com/project/abhsag24/uip/branch/master)
+[![codecov](https://codecov.io/gh/NIT-dgp/UIP/branch/master/graph/badge.svg)](https://codecov.io/gh/NIT-dgp/UIP)
 
 UIP scrapes images from reddit and unsplash, and applies them as a wallpaper
 on your desktop(with configurable schedule).
