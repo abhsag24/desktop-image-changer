@@ -91,7 +91,7 @@ class scheduler(Thread):
 
     def run(self):
         """Begin Scheduling Wallpapers."""
-        if not self.offline and active_count() < 2:
+        if not self.offline and active_count() <= 2:
             self.download_thread = Thread(
                             target=download,
                             args=(self.website, self.directory, self.count),
@@ -108,5 +108,3 @@ class scheduler(Thread):
             self.change_random()
             self.setStartTime(time.time())
             self.changeCycle()
-        else:
-            print("No downloaded images. Try again in online mode.")

@@ -50,7 +50,7 @@ class MainWindow:
         """Method that updates UI periodically."""
         # update UI with data received
         self.update_images()
-        generalTab.update_gallery(self)
+        self.gallery.update()
 
     def next_wallpaper(self):
         """Preview next wallpaper."""
@@ -84,6 +84,7 @@ class MainWindow:
                                 args=(self.settings['website'],
                                       self.settings['pics-folder'],
                                       self.settings['no-of-images']),
+                                kwargs={'appObj': self},
                                 daemon=True)
                 download_thread.start()
             self.update_ui()

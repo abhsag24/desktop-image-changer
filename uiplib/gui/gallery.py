@@ -1,4 +1,5 @@
 """The module houses the class that displays wallpapers in the app."""
+from random import choice
 
 from tkinter import *
 from PIL import ImageTk
@@ -72,8 +73,7 @@ class Gallery(Frame):
         gallery_remove(self.slider)
 
         if len(appObj.images) != 0:
-            self.set_image(
-                appObj.images[(appObj.index) % len(appObj.images)])
+            self.set_image(choice(appObj.images))
         else:
             self.show_error()
 
