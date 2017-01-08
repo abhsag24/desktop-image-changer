@@ -52,6 +52,7 @@ class Gallery(Frame):
         show_image = image.resize((self.width, self.height))
         self.tk_image = ImageTk.PhotoImage(show_image)
         self.cv.create_image(0, 0, anchor="nw", image=self.tk_image)
+        self.cv.pack(fill=BOTH, expand=YES)
 
     def _blur_helper(self, event):
         """Helper to schedule the blur_image task."""
