@@ -37,5 +37,5 @@ class WallpaperTest(unittest.TestCase):
         with tempfile.NamedTemporaryFile(mode="wb") as temp_wallpaper:
             wallpaper.set(temp_wallpaper.name)
             self.assertEqual(
-                wallpaper.get()[0], "/private"+temp_wallpaper.name)
+                wallpaper.get()[0], temp_wallpaper.name)
         wallpaper.set(current_wallpaper)

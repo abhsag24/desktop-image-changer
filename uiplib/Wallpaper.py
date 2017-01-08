@@ -2,6 +2,8 @@
 
 import sys
 
+from subprocess import Popen, PIPE
+
 
 class Wallpaper:
     """Wallpaper Class that holds set and get functions."""
@@ -38,14 +40,14 @@ class Wallpaper:
 
     def set_wallpaper_osx(self, filename):  # pragma: no cover
         """Set a file as OSX Wallpaper."""
-        from appscript import app, mactypes  # use applescript modules
+        command = ("osascript -e 'tell application \"System Events\" "
+                   "to set picture of every desktop to \"{}\"'"
+                   .format(filename))
+        process = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
+        _, error = process.communicate()
 
-        se = app('System Events')  # fetch system events
-        desktops = se.desktops.display_name.get()  # get all available displays
-        for d in desktops:
-            desk = se.desktops[d]
-            # set wallpaper for each display
-            desk.picture.set(mactypes.File(filename))
+        if len(error) != 0:
+            raise SystemExit(error.decode("utf-8"))
 
     def get(self):
         """Get file address of current Wallpaper."""
@@ -78,13 +80,12 @@ class Wallpaper:
 
     def get_wallpaper_osx(self):    # pragma: no cover
         """Get current osx Wallpaper."""
-        from appscript import app, mactypes  # use applescript modules
+        command = ("osascript -e 'tell application \"System Events\" "
+                   "to get picture of every desktop'")
+        process = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
+        output, error = process.communicate()
 
-        se = app('System Events')  # fetch system events
-        desktops = se.desktops.display_name.get()  # get all available displays
-        wallpaper_set = set([])
-        for d in desktops:
-            desk = se.desktops[d]
-            # set wallpaper for each display
-            wallpaper_set.add(desk.picture.get())
-        return list(wallpaper_set)
+        if len(error) != 0:
+            raise SystemExit(error.decode("utf-8"))
+
+        return output.decode("utf-8").splitlines()

@@ -1,6 +1,5 @@
 """Module to perform build, package and install."""
 
-import sys
 import os
 import json
 
@@ -55,10 +54,7 @@ if not os.path.isfile(settings_file_path):
     with open(settings_file_path, "w") as settings_file:
         settings_file.write(json.dumps(file_data, indent=4, sort_keys=True))
 
-requirements = []
-requirements += get_requirements('requirements.txt')
-if sys.platform.startswith('darwin'):
-    requirements += get_requirements('mac-requirements.txt')
+requirements = get_requirements('requirements.txt')
 
 setup(
     # Name of application:
