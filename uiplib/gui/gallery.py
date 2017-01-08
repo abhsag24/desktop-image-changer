@@ -2,7 +2,7 @@
 from random import choice
 
 from tkinter import *
-from PIL import ImageTk
+from PIL import ImageTk, Image
 from uiplib.uipImage import UipImage
 
 
@@ -28,7 +28,7 @@ class Gallery(Frame):
                            "Please refresh and try again!")
         self.label.pack(padx=50, pady=50)
 
-    def set_image(self, imagePath):
+    def set_image(self, uip_image):
         """Method to set the image preview."""
         self.label = None
         self.width = 600
@@ -44,12 +44,13 @@ class Gallery(Frame):
                                 command=self._blur_helper,
                                 label="Blur", showvalue=0)
             self.slider.pack()
-        self.image = UipImage(imagePath)
-        self.show_image(self.image)
+        self.image = uipImage
+        self.show_image(uipImage.image)
 
-    def show_image(self, image):
+    def show_image(self, pil_image):
         """Show the image on canvas."""
-        show_image = image.resize((self.width, self.height))
+        show_image = pil_image.resize((self.width, self.height),
+                                      resample=Image.ANTIALIAS)
         self.tk_image = ImageTk.PhotoImage(show_image)
         self.cv.create_image(0, 0, anchor="nw", image=self.tk_image)
         self.cv.pack(fill=BOTH, expand=YES)

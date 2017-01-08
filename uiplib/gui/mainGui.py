@@ -12,6 +12,7 @@ from uiplib.scheduler import scheduler
 from uiplib.utils.utils import flush_wallpapers
 from uiplib.settings import DEFAULT_FAVOURITE_PICS_FOLDER
 from uiplib.scrape import download
+from uiplib.uipImage import UipImage
 
 
 class MainWindow:
@@ -97,8 +98,9 @@ class MainWindow:
         self.update_pics_from_fav_pics()
         directory = self.settings['pics-folder']
         files = os.listdir(directory)
-        self.images = [os.path.join(directory, file) for file in files
-                       if (file.endswith('.png') or file.endswith('.jpg'))]
+        self.images = [UipImage(os.path.join(directory, file))
+                       for file in files if
+                       (file.endswith('.png') or file.endswith('.jpg'))]
 
     def update_pics_from_fav_pics(self):
         """Method to inherit the favourite wallpapers back into pics-folder."""

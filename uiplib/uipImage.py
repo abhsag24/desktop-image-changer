@@ -25,12 +25,6 @@ class UipImage:
         return self.image.filter(ImageFilter.GaussianBlur(
                                       radius=float(radius)))
 
-    def resize(self, dimensions):
-        """Resize the image using ANTIALIAS resampling."""
-        self.dimensions = dimensions
-        resample = Image.ANTIALIAS
-        return self.image.resize(dimensions, resample=resample)
-
     def save(self):
         """Save the image while applying all the parameters used to edit it."""
         if self.edited:
