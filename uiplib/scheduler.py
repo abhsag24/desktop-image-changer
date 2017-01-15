@@ -14,10 +14,10 @@ try:
 except ImportError:
     # not on windows
     pass
-from threading import Thread, active_count
+from threading import Thread
 
 
-class scheduler(Thread):
+class scheduler:
     """Class which schedules the wallpaper change."""
 
     def __init__(self, offline, pics_folder, timeout, website, count,
@@ -31,8 +31,9 @@ class scheduler(Thread):
         self.wallpaper = wallpaper
         self.offline = offline
         self.appObj = appObj
-
-        Thread.__init__(self)
+        self.download_thread = None
+        self.schedule_thread = None
+        self.run()
 
     def change_random(self):
         """Change the wallpaper to a random image."""
@@ -91,7 +92,7 @@ class scheduler(Thread):
 
     def run(self):
         """Begin Scheduling Wallpapers."""
-        if not self.offline and active_count() <= 2:
+        if not self.offline and not self.download_thread:
             self.download_thread = Thread(
                             target=download,
                             args=(self.website, self.directory, self.count),
@@ -101,10 +102,17 @@ class scheduler(Thread):
 
         elif not os.path.exists(self.directory):
             os.makedirs(self.directory)
+            self.run()
 
-        if os.listdir(self.directory) != []:
+        while os.listdir(self.directory) != []:  # Wait till first image.
+            time.sleep(60)
+
+        if not self.schedule_thread:
             print("You can wait for next wallpaper or skip this wallpaper"
                   " by just pressing enter.")
             self.change_random()
             self.setStartTime(time.time())
-            self.changeCycle()
+            self.schedule_thread = Thread(
+                target=self.changeCycle(),
+                daemon=True)
+            self.schedule_thread.start()

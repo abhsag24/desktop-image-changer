@@ -123,8 +123,6 @@ class MainWindow:
                                                    self.settings['ui']),
                                               self.wallpaper,
                                               appObj=self)
-            self.scheduler_object.setDaemon(True)
-            self.scheduler_object.start()
 
     def favourite(self):
         """Method to copy the favourite image to favourite_pics folder."""

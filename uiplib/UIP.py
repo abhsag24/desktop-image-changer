@@ -65,8 +65,6 @@ def main():
                                          not (settings['service'] or
                                               settings['ui']),
                                          wallpaper)
-            scheduler_object.setDaemon(True)
-            scheduler_object.start()
         except KeyboardInterrupt:
             exit_UIP()
 
