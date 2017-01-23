@@ -104,7 +104,7 @@ class scheduler:
             os.makedirs(self.directory)
             self.run()
 
-        while os.listdir(self.directory) != []:  # Wait till first image.
+        while os.listdir(self.directory) == []:  # Wait till first image.
             time.sleep(60)
 
         if not self.schedule_thread:
