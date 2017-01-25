@@ -126,4 +126,8 @@ class MainWindow:
 
     def favourite(self):
         """Method to copy the favourite image to favourite_pics folder."""
+        if (len(self.images) == 0):
+            messagebox.showinfo("Error!",
+                                "No images found. Refresh and try again later",
+                                icon='warning')
         copy(self.images[self.index], self.settings['fav-pics-folder'])
