@@ -3,12 +3,12 @@
 import sys
 import os
 
-from daemoniker import Daemonizer, send, SIGTERM
+from daemoniker import Daemonizer
 
 from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
 from uiplib.Wallpaper import Wallpaper
-from uiplib.utils.utils import flush_wallpapers
+from uiplib.utils.utils import flush_wallpapers, exit_UIP
 
 
 def main():
@@ -67,13 +67,3 @@ def main():
                                          wallpaper)
         except KeyboardInterrupt:
             exit_UIP()
-
-
-def exit_UIP():
-    """Exit from UIP program."""
-    pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
-    if os.path.exists(pid_file):
-        send(pid_file, SIGTERM)
-        os.remove(pid_file)
-    print("\nExiting UIP hope you had a nice time :)")
-    sys.exit(0)
