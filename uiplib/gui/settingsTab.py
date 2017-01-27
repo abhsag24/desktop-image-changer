@@ -94,11 +94,22 @@ def create_settings_tab(appObj):
     count_label.grid(row=6, padx=10, pady=10, sticky=W)
     count.grid(row=6, column=1, sticky=W)
 
+    # Number to days to auto-delete
+    appObj.auto_del_val = StringVar()
+    val = int(appObj.settings['days-to-autodel']/(24*60*60))
+    appObj.auto_del_val.set(val)
+    auto_del_label = Label(mainFrame, text="Auto-delete Wallpaper in:")
+    autodel = Entry(mainFrame, textvariable=appObj.auto_del_val)
+    auto_del_label.grid(row=7, padx=10, pady=10, sticky=W)
+    autodel.grid(row=7, column=1, sticky=W)
+    days_label = Label(mainFrame, text="days")
+    days_label.grid(row=7, column=2, padx=10, pady=10, sticky=W)
+
     # Apply
     apply_button = Button(mainFrame,
                           text="Apply",
                           command=lambda: handle_settings(appObj))
-    apply_button.grid(row=7, column=1, pady=10, sticky=W)
+    apply_button.grid(row=8, column=1, pady=10, sticky=W)
 
     # Reset
     default_button = Button(mainFrame,
@@ -107,7 +118,7 @@ def create_settings_tab(appObj):
                                 update_settings_view(appObj,
                                                      mainFrame,
                                                      DEFAULT_SETTINGS)))
-    default_button.grid(row=7, column=2, pady=10, sticky=W)
+    default_button.grid(row=8, column=2, pady=10, sticky=W)
 
 
 def toggle_subreddit(appObj, mainFrame):
@@ -164,6 +175,13 @@ def handle_settings(appObj):
         messagebox.showwarning("AttributeError",
                                "Invalid value for no of images")
         return
+    try:
+        val = int(appObj.auto_del_val.get())
+        appObj.new_settings['days-to-autodel'] = val*24*60*60
+    except ValueError:
+        messagebox.showwarning("AttributeError",
+                               "Invalid value for no of days to auto-delete")
+        return
     update_settings(appObj.new_settings)
 
 
@@ -182,6 +200,7 @@ def update_settings_view(appObj, mainFrame, settings):
         toggle_subreddit(appObj, mainFrame)
     appObj.timeout_val.set(int(int(settings['timeout'])/60))
     appObj.count_val.set(settings["no-of-images"])
+    appObj.auto_del_val.set(int(settings["days-to-autodel"]/(24*60*60)))
     appObj.root.update_idletasks()
     update_settings(settings)
 
