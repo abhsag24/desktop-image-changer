@@ -8,7 +8,7 @@ from daemoniker import Daemonizer
 from uiplib.settings import ParseSettings, HOME_DIR
 from uiplib.scheduler import scheduler
 from uiplib.Wallpaper import Wallpaper
-from uiplib.utils.utils import flush_wallpapers, exit_UIP
+from uiplib.utils.utils import flush_wallpapers, exit_UIP, auto_flush
 
 
 def main():
@@ -17,6 +17,7 @@ def main():
     settingsParser = ParseSettings()
     settings = settingsParser.settings
     pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
+    auto_flush(settings)
     if settings['error']:
         print("\nWRONG USAGE OF FLAGS, see --help")
         settingsParser.show_help()

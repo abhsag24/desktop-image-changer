@@ -67,3 +67,13 @@ def exit_UIP():  # pragma: no cover
         os.remove(pid_file)
     print("\nExiting UIP hope you had a nice time :)")
     sys.exit(0)
+
+
+def auto_flush(settings):
+    """Automatically deletes old wallpapers."""
+    images = os.listdir(settings['pics-folder'])
+    for image in images:
+        image_path = os.path.join(settings['pics-folder'], image)
+        delta = time.time() - os.path.getmtime(image_path)
+        if delta > settings['days-to-autodel']:
+            os.remove(image_path)

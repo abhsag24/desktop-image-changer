@@ -62,3 +62,18 @@ class UtilsTest(unittest.TestCase):
                         'https://www.reddit.com/r/pics/'
                     ]
                 })
+
+    def test_auto_flush(self):
+        testdir = os.path.join(os.path.expanduser("~"), '.WAKEUPDOLORES')
+        if not (os.path.isdir(testdir)):
+            setupUtils.make_dir(testdir)
+        file_path = os.path.join(testdir, 'temp')
+        temp_file = open(file_path, 'w+')
+        temp_file.close()
+        os.utime(file_path,
+                 (time.time()-60, os.path.getmtime(file_path) - 30))
+        utils.auto_flush({
+            'pics-folder': testdir,
+            'days-to-autodel': 20})
+        self.assertEqual(os.listdir(testdir), [])
+        shutil.rmtree(testdir)
