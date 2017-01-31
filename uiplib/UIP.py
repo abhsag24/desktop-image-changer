@@ -2,6 +2,7 @@
 
 import sys
 import os
+import time
 
 from daemoniker import Daemonizer
 
@@ -66,5 +67,7 @@ def main():
                                          not (settings['service'] or
                                               settings['ui']),
                                          wallpaper)
+            while True:  # To keep the program from closing.
+                time.sleep(15)
         except KeyboardInterrupt:
             exit_UIP()

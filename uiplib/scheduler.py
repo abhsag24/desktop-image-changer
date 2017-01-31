@@ -113,6 +113,6 @@ class scheduler:
             self.change_random()
             self.setStartTime(time.time())
             self.schedule_thread = Thread(
-                target=self.changeCycle(),
+                target=self.changeCycle,
                 daemon=True)
             self.schedule_thread.start()
