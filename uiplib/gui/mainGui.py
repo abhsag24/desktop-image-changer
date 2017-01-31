@@ -130,4 +130,7 @@ class MainWindow:
             messagebox.showinfo("Error!",
                                 "No images found. Refresh and try again later",
                                 icon='warning')
-        copy(self.images[self.index], self.settings['fav-pics-folder'])
+        image_path = self.images[self.index].image_path
+        copy(image_path, self.settings['fav-pics-folder'])
+        messagebox.showinfo("Success!",
+                            "Image successfully saved to favourites")
