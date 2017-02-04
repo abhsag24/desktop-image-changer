@@ -1,6 +1,6 @@
 """Module that builds the Graphical User Interface."""
 
-import os
+import sys
 from shutil import copy
 from tkinter import *
 from tkinter.ttk import *
@@ -12,7 +12,9 @@ from uiplib.scheduler import scheduler
 from uiplib.utils.utils import flush_wallpapers
 from uiplib.settings import DEFAULT_FAVOURITE_PICS_FOLDER
 from uiplib.scrape import download
-from uiplib.uipImage import UipImage
+from uiplib.utils.utils import update_images
+
+isLinux = sys.platform.startswith('linux')
 
 
 class MainWindow:
@@ -32,6 +34,11 @@ class MainWindow:
         self.images = []
         self.wallpaper = wallpaper
         self.scheduler_object = None
+        # Activating minimizer on close
+        if isLinux:
+            from uiplib.gui.LinuxMinimizer import LinuxMinimizer
+            self.mini = LinuxMinimizer(
+                self.settings, self.wallpaper, self.index, self.images)
 
     def create_ui(self):
         """Method to initialize UI."""
@@ -46,11 +53,13 @@ class MainWindow:
         self.update_ui()
         # run the main event loop of UI
         self.root.mainloop()
+        if isLinux:
+            self.mini.run()
 
     def update_ui(self):
         """Method that updates UI periodically."""
         # update UI with data received
-        self.update_images()
+        update_images(self)
         self.gallery.update()
 
     def next_wallpaper(self):
@@ -91,25 +100,6 @@ class MainWindow:
             self.update_ui()
         else:
             print("Not Flushing!")
-
-    def update_images(self):
-        """Method to get images from directory."""
-        print("Updating Image List")
-        self.update_pics_from_fav_pics()
-        directory = self.settings['pics-folder']
-        files = os.listdir(directory)
-        self.images = [UipImage(os.path.join(directory, file))
-                       for file in files if
-                       (file.endswith('.png') or file.endswith('.jpg'))]
-
-    def update_pics_from_fav_pics(self):
-        """Method to inherit the favourite wallpapers back into pics-folder."""
-        src_directory = self.settings['fav-pics-folder']
-        src_files = os.listdir(src_directory)
-        for file_name in src_files:
-            full_file_name = os.path.join(src_directory, file_name)
-            if (os.path.isfile(full_file_name)):
-                copy(full_file_name, self.settings['pics-folder'])
 
     def play(self):
         """Start scheduling wallpapers."""

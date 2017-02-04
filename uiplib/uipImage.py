@@ -5,7 +5,7 @@ import os
 from PIL import Image, ImageFilter
 
 
-class UipImage:
+class UipImage:  # pragma: no cover
     """Class that holds the image as well as the functions used to edit it."""
 
     def __init__(self, image_path):
