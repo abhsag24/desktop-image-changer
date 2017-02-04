@@ -10,6 +10,7 @@ from daemoniker import send, SIGTERM
 
 from uiplib.settings import HOME_DIR
 from uiplib.utils.setupUtils import make_dir
+from uiplib.uipImage import UipImage
 
 
 def get_percentage(unew, uold, start):
@@ -77,3 +78,24 @@ def auto_flush(settings):
         delta = time.time() - os.path.getmtime(image_path)
         if delta > settings['days-to-autodel']:
             os.remove(image_path)
+
+
+def update_images(appObject):  # pragma: no cover
+    """Method to get images from directory."""
+    print("Updating Image List")
+    update_pics_from_fav_pics(appObject)
+    directory = appObject.settings['pics-folder']
+    files = os.listdir(directory)
+    appObject.images = [UipImage(os.path.join(directory, file))
+                        for file in files if
+                        (file.endswith('.png') or file.endswith('.jpg'))]
+
+
+def update_pics_from_fav_pics(appObject):  # pragma: no cover
+    """Method to inherit the favourite wallpapers back into pics-folder."""
+    src_directory = appObject.settings['fav-pics-folder']
+    src_files = os.listdir(src_directory)
+    for file_name in src_files:
+        full_file_name = os.path.join(src_directory, file_name)
+        if (os.path.isfile(full_file_name)):
+            copy(full_file_name, appObject.settings['pics-folder'])
