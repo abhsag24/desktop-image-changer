@@ -41,13 +41,13 @@ sudo python3 setup.py install
 
 >NOte: make sure you have setuptools, to do that run: pip install setuptools.
 
->Note: there is no sudo for windows as well as when you have root privelages.
+>Note: there is no sudo for windows as well as when you have root privileges.
 Just run commands without sudo
 
 >Note: some setups use python instead of python3 and pip3 instead of pip
 
 >Note: For some OS' you might need to install Imagetk(needed in our GUI)
-seperately for eg: in Ubuntu you can install it by:
+separately for eg: in Ubuntu you can install it by:
 `sudo apt-get install python3-pil.imagetk`
 
 Run
