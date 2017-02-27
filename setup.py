@@ -5,7 +5,7 @@ import json
 
 from uiplib.utils.setupUtils import check_version, make_dir
 check_version()
-# Proceed only if the version is greater else exits
+
 
 from setuptools import setup
 from uiplib.settings import (HOME_DIR,
@@ -38,7 +38,6 @@ def get_requirements(filename):
         out.append(a.strip())
     return out
 
-# Make Home Directory
 if not os.path.exists(HOME_DIR):
     make_dir(HOME_DIR)
 
@@ -57,35 +56,34 @@ if not os.path.isfile(settings_file_path):
 requirements = get_requirements('requirements.txt')
 
 setup(
-    # Name of application:
+    
     name="UIP",
 
     version="0.0.3",
 
-    # author details:
+
     author="uip-dev",
     author_email="uip.developers@gmail.com",
 
-    # packages:
+  
     packages=get_packages(),
-
+    #license
     license="LICENSE",
-
+    #url
     url="https://www.github.com/NIT-dgp/UIP",
 
-    # description
+   
     description="A library to get new wallpapers.",
     long_description=open("README.md").read(),
 
-    # dependencies
     install_requires=requirements,
 
-    # scripts to be run
+
     scripts=[
         "UIP"
     ],
 
-    # binaries that can be called from anywhere
+   
     entry_points={
         "console_scripts": [
                   "UIP = uiplib.UIP:main"]}
