@@ -17,7 +17,7 @@ except ImportError:
 from threading import Thread
 
 
-class scheduler:
+class Scheduler:
     """Class which schedules the wallpaper change."""
 
     def __init__(self, offline, pics_folder, timeout, website, count,

@@ -7,7 +7,7 @@ import time
 from daemoniker import Daemonizer
 
 from uiplib.settings import ParseSettings, HOME_DIR
-from uiplib.scheduler import scheduler
+from uiplib.scheduler import Scheduler
 from uiplib.Wallpaper import Wallpaper
 from uiplib.utils.utils import flush_wallpapers, exit_UIP, auto_flush
 
@@ -59,7 +59,7 @@ def main():
 
     else:
         try:
-            scheduler_object = scheduler(settings['offline'],
+            scheduler_object = Scheduler(settings['offline'],
                                          settings['pics-folder'],
                                          settings['timeout'],
                                          settings['website'],

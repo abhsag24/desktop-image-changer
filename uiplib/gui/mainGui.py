@@ -8,7 +8,7 @@ from tkinter import messagebox
 from threading import Thread, active_count
 
 from uiplib.gui import generalTab, settingsTab
-from uiplib.scheduler import scheduler
+from uiplib.scheduler import Scheduler
 from uiplib.utils.utils import flush_wallpapers
 from uiplib.settings import DEFAULT_FAVOURITE_PICS_FOLDER
 from uiplib.scrape import download
@@ -104,7 +104,7 @@ class MainWindow:
     def play(self):
         """Start scheduling wallpapers."""
         if not self.scheduler_object:
-            self.scheduler_object = scheduler(self.settings['offline'],
+            self.scheduler_object = Scheduler(self.settings['offline'],
                                               self.settings['pics-folder'],
                                               self.settings['timeout'],
                                               self.settings['website'],
