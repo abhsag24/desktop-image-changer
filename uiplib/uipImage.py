@@ -2,8 +2,9 @@
 
 import os
 
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageFile
 
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class UipImage:  # pragma: no cover
     """Class that holds the image as well as the functions used to edit it."""
