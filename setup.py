@@ -58,32 +58,29 @@ requirements = get_requirements('requirements.txt')
 setup(
     
     name="UIP",
-
+    
     version="0.0.3",
-
-
+    
     author="uip-dev",
     author_email="uip.developers@gmail.com",
-
-  
+    
     packages=get_packages(),
-    #license
+    
     license="LICENSE",
-    #url
+    
     url="https://www.github.com/NIT-dgp/UIP",
 
-   
     description="A library to get new wallpapers.",
     long_description=open("README.md").read(),
 
     install_requires=requirements,
 
-
     scripts=[
         "UIP"
     ],
 
-   
+   #binaries that can be called from anywhere
+    
     entry_points={
         "console_scripts": [
                   "UIP = uiplib.UIP:main"]}
