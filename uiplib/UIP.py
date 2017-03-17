@@ -59,14 +59,14 @@ def main():
 
     else:
         try:
-            scheduler_object = scheduler(settings['offline'],
-                                         settings['pics-folder'],
-                                         settings['timeout'],
-                                         settings['website'],
-                                         settings['no-of-images'],
-                                         not (settings['service'] or
-                                              settings['ui']),
-                                         wallpaper)
+            settings_dir={settings['offline'],
+                          settings['pics-folder'],
+                          settings['timeout'],
+                          settings['website'],
+                          settings['no-of-images'],
+                          not (settings['service'] or settings['ui']),
+                          wallpaper}
+            scheduler_object = scheduler(settings_dir)
             while True:  # To keep the program from closing.
                 time.sleep(15)
         except KeyboardInterrupt:
