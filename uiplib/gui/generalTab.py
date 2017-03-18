@@ -33,10 +33,7 @@ def create_general_tab(appObj):
     setWallpaperBtn = Button(footerFrame,
                              text="Set Wallpaper",
                              command=appObj.set_wallpaper)
-    flushBtn = Button(footerFrame,
-                      text="Flush",
-                      command=appObj.flush)
-    flushBtn.pack(side=RIGHT, padx=5, pady=5)
+   
     setWallpaperBtn.pack(side=RIGHT, padx=5, pady=5)
 
     appObj.gallery = Gallery(mainFrame, appObj)
