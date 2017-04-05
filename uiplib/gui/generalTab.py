@@ -21,23 +21,30 @@ def create_general_tab(appObj):
     mainFrame.grid(row=1, column=0, sticky=N+E+W+S)
     footerFrame.grid(row=2, column=0, sticky=S+W+E)
 
+    #Add a button to go to next wallpaper
     nextButton = Button(mainFrame,
                         text="▶",
                         command=appObj.next_wallpaper)
+    nextButton.pack(side=RIGHT, padx=5, pady=5)
+
+    #Add a button to go to previous wallpaper
     prevButton = Button(mainFrame,
                         text="◀",
                         command=appObj.prev_wallpaper)
-    nextButton.pack(side=RIGHT, padx=5, pady=5)
     prevButton.pack(side=LEFT, padx=5, pady=5)
 
+    #Add a button to set the wallpaper
     setWallpaperBtn = Button(footerFrame,
                              text="Set Wallpaper",
                              command=appObj.set_wallpaper)
+    setWallpaperBtn.pack(side=RIGHT, padx=5, pady=5)
+
+    #Add a button to flush
     flushBtn = Button(footerFrame,
                       text="Flush",
                       command=appObj.flush)
     flushBtn.pack(side=RIGHT, padx=5, pady=5)
-    setWallpaperBtn.pack(side=RIGHT, padx=5, pady=5)
+    
 
     appObj.gallery = Gallery(mainFrame, appObj)
     appObj.gallery.pack(fill=BOTH)
