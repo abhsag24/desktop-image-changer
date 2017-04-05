@@ -31,7 +31,6 @@ def create_general_tab(appObj):
     prevButton = Button(mainFrame,
                         text="◀",
                         command=appObj.prev_wallpaper)
-    
     prevButton.pack(side=LEFT, padx=5, pady=5)
 
     #Add a button to set the wallpaper
