@@ -51,11 +51,6 @@ def main():
     if not settings['offline']:
         print("UIP will now connect to internet and download images"
               " from reddit and unsplash.")
-    if settings['ui']:
-        from uiplib.gui.mainGui import MainWindow
-        app = MainWindow(settings, wallpaper)
-        app.run()
-        exit_UIP()
 
     else:
         try:
@@ -64,8 +59,7 @@ def main():
                                          settings['timeout'],
                                          settings['website'],
                                          settings['no-of-images'],
-                                         not (settings['service'] or
-                                              settings['ui']),
+                                         not settings['service']
                                          wallpaper)
             while True:  # To keep the program from closing.
                 time.sleep(15)

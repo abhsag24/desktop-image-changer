@@ -38,6 +38,7 @@ def get_requirements(filename):
         out.append(a.strip())
     return out
 
+
 # Make Home Directory
 if not os.path.exists(HOME_DIR):
     make_dir(HOME_DIR)
