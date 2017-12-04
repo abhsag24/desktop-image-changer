@@ -28,10 +28,12 @@ uninstall: clean-pyc
 
 test-install: clean
 	$(PIP) install --requirement $(TEST_REQUIREMENTS)
-	cib install -c $(COAFILE)
 
 test:
 	pytest
 
 lint:
 	coala --non-interactive
+
+lint-install:
+	$(PIP) install coala-bears

@@ -21,7 +21,7 @@ before_install:
         source venv/bin/activate;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        sudo apt-get install gsettings-desktop-schemas python3-gi python3-gi-cairo libglib2.0-dev libffi-dev libgirepository1.0 libcairo2-dev python3-cairo-dev;
+        sudo apt-get install gsettings-desktop-schemas python3-gi python3-gi-cairo libglib2.0-dev libffi-dev libgirepository1.0 libcairo2-dev python3-cairo-dev dbus-x11;
        .scripts/PYGO.sh;
     fi
 
@@ -30,7 +30,7 @@ before_script:
 
 script:
   - make install
-  - make lint
+  # linux can set wallpapers only with dbus
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
         dbus-launch pytest;
     else
