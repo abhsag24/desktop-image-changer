@@ -52,10 +52,10 @@ class Wallpaper:
     def get(self):
         """Get file address of current Wallpaper."""
         if sys.platform.startswith('win32'):   # pragma: no cover
-            return self.get_wallpaper_windows()
+            return [self.get_wallpaper_windows()]
 
         elif sys.platform.startswith('linux'):
-            return self.get_wallpaper_linux()
+            return [self.get_wallpaper_linux()]
 
         elif sys.platform.startswith('darwin'):  # pragma: no cover
             return self.get_wallpaper_osx()

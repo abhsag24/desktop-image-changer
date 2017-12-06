@@ -6,8 +6,6 @@ import json
 import shutil
 import sys
 
-from daemoniker import send, SIGTERM
-
 from uiplib.settings import HOME_DIR
 from uiplib.utils.setupUtils import make_dir
 from uiplib.uipImage import UipImage
@@ -62,10 +60,6 @@ def flush_wallpapers(folder):
 
 def exit_UIP():  # pragma: no cover
     """Exit from UIP program."""
-    pid_file = os.path.join(HOME_DIR, 'daemon-uip.pid')
-    if os.path.exists(pid_file):
-        send(pid_file, SIGTERM)
-        os.remove(pid_file)
     print("\nExiting UIP hope you had a nice time :)")
     sys.exit(0)
 
