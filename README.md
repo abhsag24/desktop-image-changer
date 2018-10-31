@@ -11,9 +11,9 @@ Works with Windows, Mac and Gtk based desktops on Linux.
 Examples Of UIP Wallpapers
 ==========================
 
-![alt text]( https://raw.githubusercontent.com/NIT-dgp/UIP-misc/master/examples/gnome_wallpaper.png )
-![alt text]( https://raw.githubusercontent.com/NIT-dgp/UIP-misc/master/examples/mac_wallpaper.png )
-![alt text]( https://raw.githubusercontent.com/NIT-dgp/UIP-misc/master/examples/win_wallpaper.png )
+![alt text]( https://raw.githubusercontent.com/NIT-dgp/Graphics/master/misc/gnome_wallpaper.png )
+![alt text]( https://raw.githubusercontent.com/NIT-dgp/Graphics/master/misc/mac_wallpaper.png )
+![alt text]( https://raw.githubusercontent.com/NIT-dgp/Graphics/master/misc/win_wallpaper.png )
 
 Set Up
 ======
